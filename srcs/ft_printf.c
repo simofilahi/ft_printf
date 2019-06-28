@@ -23,7 +23,7 @@ int     arg_len(const char *s)
         }
         counter--;
     }
-    else
+    else if (*s == '%' && *(s + 1) != '%')
     {
          while (*s && !ft_cmp(*s, &conv[0]))
          {
@@ -31,6 +31,16 @@ int     arg_len(const char *s)
             s++;
          }
          counter++;
+    }
+    else
+    {
+        while (*s && *s == '%')
+         {
+            counter++;
+            s++;
+         }
+         s--;
+         counter--;
     }
     return (counter);
 }
@@ -68,28 +78,42 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     if (!(arg = (char *)malloc(sizeof(char) * len)))
         return ;
     i = 0;
+    flag = 0;
     if (*(*s) != '%')
     {
         while (*(*s) && *(*s) != '%')
         {
+
             arg[i++] = *(*s);
             (*s)++;
         }
         (*s)--;
-        flag = 0;
     }
-    else
+    else if (*(*s) == '%' && *(*s + 1) != '%')
     {
          while (*(*s) && !ft_cmp(*(*s), &conv[0]))
          {
+
             arg[i++] = *(*s);
             (*s)++;
          }
          arg[i++] = *(*s);
          flag = 1;
     }
+    else
+    {
+        while (*(*s) && *(*s) == '%' &&\
+         ((*(*s + 1) == '%') ||\
+           ft_isspace((*(*s + 1)))))
+        {
+            arg[i++] = *(*s);
+            (*s)++;
+        }
+        arg[i++] = *(*s);
+        (*s)--;
+        flag = -1;
+    }
     arg[i] = '\0';
-  //  ft_putstr(arg);
     create_list(head_ref, tail_ref, arg, flag);
     ft_strdel(&arg);
 }
@@ -125,6 +149,11 @@ int ft_printf(const char *format, ...)
             ft_putstr_fd(holder->head_ref->arg, 1);
             ret += ft_strlen(holder->head_ref->arg);
         }
+        else if (holder->head_ref->flag == -1)
+        {
+            ret += ft_strlen(holder->head_ref->arg) / 2;
+            print((int)ft_strlen(holder->head_ref->arg) / 2, '%');
+        }
         else
         {
             if (conversion(holder->head_ref->arg) == 'c')
@@ -146,12 +175,40 @@ int main()
 {
     int ret;
 
-
-    ret = ft_printf("%0.0s\n", ft_strdup("Hello World"));
+    // char *var = ft_strdup("Hello World");
+    // ret = ft_printf("%%%%%20p%%%%\n", var);
+    // printf("ret ==> %d\n", ret);
+    // ret = printf("%%%%%20p%%%%\n", var);
+    // printf("ret ==> %d\n", ret);
+  /*  ret = ft_printf("======= %%%.5s%%%%\n", "this a test");
     printf("ret ==> %d\n", ret);
-    ret = printf("%0.0s\n", ft_strdup("Hello World"));
-     printf("ret ==> %d\n", ret);
+    ret = ft_printf("======= %%%%%-10.5s%%%%%%\n", "this a test");
+    printf("ret ==> %d\n", ret);
+    ret = ft_printf("======= %%%5.5s\n%%%%%%\n", "this a test");
+    printf("ret ==> %d\n", ret);
+    printf("\n");
+    printf("***********************************\n");
+    printf("***********************************\n");
+    printf("\n");
+    ret = printf("======= %%%.5s%%%%\n", "this a test");
+    printf("ret ==> %d\n", ret);
+    ret = printf("======= %%%%%-10.5s%%%%%%\n", "this a test");
+    printf("ret ==> %d\n", ret);
+    ret = printf("======= %%%5.5s\n%%%%%%\n", "this a test");
+    printf("ret ==> %d\n", ret);*/
+
+   /*/ ft_printf("%5p\n", "this a test");
+    printf("%5p\n", "this a test");
+    ft_printf("%c\n", 'K');
+    printf("%c\n", 'K');*/
+
+
+    
+    ret = ft_printf("%+5d\n", +420);
+    printf("ret ==> %d\n", ret);
+    ret = printf("%+5d\n", +420);
+    printf("ret ==> %d\n", ret);
     return 0;
 }
 
-//printf("hello%-4s\nhow old are you %.2f\n tell first char of your name %c", simo, 23.5, 'm');
+//printf("hello%-4.2s\nhow old are you %.2f\n tell first char of your name %c", simo, 23.5, 'm');

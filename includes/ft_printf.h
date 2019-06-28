@@ -32,4 +32,6 @@ int     conv_c(char *s, va_list args);
 int     conv_s(char *s, va_list args);
 int     conv_p(char *s, va_list args);
 int     conv_d(char *s, va_list args);
+char    *hex(int long n);
+void    print(int count, char c);
 #endif

@@ -21,7 +21,8 @@ CC = gcc
 CFLAG = -Wextra -Werror -Wall
 
 SRCS = $(SRCS_DIR)/ft_printf.c \
-	   $(SRCS_DIR)/conversions.c
+	   $(SRCS_DIR)/conversions.c \
+	   $(SRCS_DIR)/hex.c
 
 OBJECTS = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS:.c=.o)))
 

@@ -88,4 +88,5 @@ int				ft_isblank(int c);
 char			*ft_trim(char *str, char delim);
 void			ft_free2d(char **p);
 int				ft_nbrlen(int nbr);
+void			ft_strrev(char *s);
 #endif
