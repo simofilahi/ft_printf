@@ -2,67 +2,15 @@
 
 char    conversion(char *s)
 {
-    while (*s)
+    int len;
+
+    len  = (int)ft_strlen(s);
+    while (--len >= 0)
     {
-        if (ft_isalpha(*s))
-            return (*s);
-        s++;
+        if (ft_isalpha(s[len]))
+            return (s[len]);
     }
     return ('0');
-}
-
-int get_precision(char *s)
-{
-    size_t len;
-    int ret;
-
-    len = ft_strlen(s);
-    ret = -1;
-    while (s[--len])
-    {
-        if (s[len] == '.')
-        {
-            ret = ft_atoi(s+(++len));
-            break;
-        }
-    }
-    return (ret);
-}
-
-int get_width(char *s)
-{
-   int i;
-   int ret;
-
-   i = 0;
-   ret = -1;
-   while (s[i])
-   {
-        if (s[i] >= '0' && s[i] <= '9')
-        {
-            ret = ft_atoi(s+i);
-            break;
-        }
-        else if (s[i] == '.')
-            break;
-        i++;
-    }
-    return (ret); 
-}
-
-int get_flag(char *s)
-{
-    while (*s)
-    {
-        if ((*s == '%') && \
-            (*(s + 1) == '-' ||\
-             *(s + 1) == '0' ||\
-             *(s + 1) == '+' ||\
-             *(s + 1) == '#'))
-                 return (*(s + 1));
-        s++;
-    }
-    return (-1);
 }
 
 t_var fill_structure(char *s)
@@ -72,6 +20,7 @@ t_var fill_structure(char *s)
     v.pres = get_precision(s);
     v.width = get_width(s);
     v.flag = get_flag(s);
+    v.length = get_length(s);
     return (v);
 }
 
@@ -121,18 +70,6 @@ int     conv_c(char *s, va_list args)
     return ((v.width > 1) ? v.width : 1);
 }
 
-void    conv_s_2(t_var v, int *len, char **string)
-{
-    char *tmp;
-
-    if (*len > v.pres)
-    {
-        tmp = *string;
-        *string = ft_strsub(*string, 0, v.pres);
-        *len = (int)ft_strlen(*string);
-    }
-}
-
 int     conv_s(char *s, va_list args)
 {
     t_var v;
@@ -142,18 +79,14 @@ int     conv_s(char *s, va_list args)
     v = fill_structure(s);
     string = va_arg(args, char *);
     len = (int)ft_strlen(string);
-    if (v.pres != -1 && v.width == -1)
-    {
-        conv_s_2(v, &len, &string);
+    string = (len > v.pres) ? ft_strsub(string, 0, v.pres) : string;
+    len = (len > v.pres) ? (int)ft_strlen(string) : len;
+    if (v.pres && v.width == -1)
         ft_putstr(string);
-    }
-    else if (v.pres == -1 && v.width != -1)
+    else if (v.pres == -1 && v.width)
         c_s_p_common(v, len, string);
-    else if (v.pres != -1 && v.width != -1)
-    {
-        conv_s_2(v, &len, &string);
+    else if (v.pres && v.width)
         c_s_p_common(v, len, string);
-    }
     return ((v.width > len) ? v.width : len);
 }
 
@@ -172,7 +105,7 @@ int     conv_p(char *s, va_list args)
     string = ft_strjoin("0x7", string);
     ft_strdel(&tmp);
     len = (int)ft_strlen(string);
-    if (v.width != -1)
+    if (v.width)
         c_s_p_common(v, len, string);
     else
         ft_putstr(string);
@@ -180,28 +113,72 @@ int     conv_p(char *s, va_list args)
     return ((v.width > len) ? v.width : len);
 }
 
-int     conv_d_2(t_var v, int len, int n)
+int    apply_width(t_var v, int len, int n, int sign)
+{
+    if (v.width > len)
+    {
+        if (v.flag == -1 || v.flag == '+')
+        {
+            len = (v.flag == '+' && n >= 0) ? len + 1 : len;
+            print(v.width - len, ' ');
+            (v.flag == '+' && n >= 0) ? ft_putchar('+') : 0;
+            ft_putnbr(n);
+        }
+        else
+        {
+            ft_putnbr(n);
+            print(v.width - len, ' ');
+        }
+    }
+    else
+        ft_putnbr(n);
+    return((v.width > len) ? v.width : len);
+}
+
+int     check_length(char *s)
+{
+    (void)s;
+    return (0);
+}
+
+int    apply_pres(t_var v, int len, int n, int sign)
+{
+    (v.flag == '+' && sign == 0) ? ft_putchar('+') : 0;
+    (sign == 1) ? ft_putchar('-') : 0;
+    (v.pres > len) ? print(v.pres - len, '0') : 0;
+    ft_putnbr(n);
+    v.pres = (v.flag == '+' || sign == 1) ? v.pres + 1 : v.pres;
+    len = (v.flag == '+' || sign == 1) ? len + 1 : len;
+    return ((v.pres > len) ? v.pres : len);
+}
+
+int     apply_width_pres(t_var v, int len, int n, int sign)
 {
     int ret = 0;
 
-    if (v.width > v.pres && v.pres > len)
+   /* if (v.width > v.pres && v.pres > len)
     {
         ret = v.width;
-        if (v.flag == -1 || v.flag == '+')
+       if (v.flag == -1 || v.flag == '+')
         {
             v.width = (v.flag == '+') ? v.width - v.pres - 1 : v.width - v.pres;
+            v.width = (sign == 1) ? v.width - 1 : v.width;
             print(v.width, ' ');
-            (v.flag == '+') ? ft_putchar('+') : 0;
+            (sign == 1) ? ft_putchar('-') : 0;
+            (v.flag == '+' && sign == 0) ? ft_putchar('+') : 0;
             print(v.pres - len, '0');
             ft_putnbr(n);
         }
         else if (v.flag == '-')
         {
+            (sign == 1) ? ft_putchar('-') : 0;
             print(v.pres - len, '0');
             ft_putnbr(n);
+            v.width = (sign == 1) ? v.width - 1 : v.width;
             v.width = v.width - v.pres;
             print(v.width, ' ');
         }
+
     }
     else if (v.width < v.pres && v.pres > len)
     {
@@ -215,52 +192,40 @@ int     conv_d_2(t_var v, int len, int n)
     {
         ret = len;
         ft_putnbr(n);
-    }
+    }*/
+    apply_pres(v, len, n, sign);
+    ft_putchar('\n');
+    v.pres += (v.pres > len) ? v.pres - len : v.pres;
+    len = v.width - v.pres;
+    ft_putnbr(len);
+    ft_putchar('\n');
+    apply_width(v, len, n, sign);
     return((ret > 0) ? ret : len);
 }
 
-void    conv_d_1(t_var v, int len, int n)
-{
-    if (v.width > len)
-    {
-        if (v.flag == -1 || v.flag == '+')
-        {
-            len = (v.flag == '+' && n>= 0) ? len + 1 : len;
-            print(v.width - len, ' ');
-            (v.flag == '+' && n >= 0) ? ft_putchar('+') : 0;
-            ft_putnbr(n);
-        }
-        else
-        {
-            ft_putnbr(n);
-            print(v.width - len, ' ');
-        }
-    }
-    else
-        ft_putnbr(n);
-}
+
+
 int     conv_d(char *s, va_list args)
 {
     t_var v;
     int  n;
     int len;
+    int sign;
 
     v = fill_structure(s);
     n = va_arg(args, int);
+    sign = 0;
+    if (n < 0)
+    {
+            n *= -1;
+            sign = 1;
+    }
     len = ft_nbrlen(n);
     if (v.width && v.pres == -1)
-        conv_d_1(v, len, n);
+        return (apply_width(v, len, n));
     else if (v.width == -1 && v.pres)
-    {
-        if (v.pres > len)
-        {
-            (v.flag == '+') ? ft_putchar('+') : 0;
-            print(v.pres - len, '0');
-        }
-        ft_putnbr(n);
-        return (v.pres);
-    }
+        return (apply_pres(v, len, n, sign));
     else if (v.width && v.pres)
-        return (conv_d_2(v, len, n));
-    return ((v.width > len) ? v.width : len);
+        return (apply_width_pres(v, len, n, sign));
+    return (0);
 }

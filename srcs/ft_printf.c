@@ -203,12 +203,19 @@ int main()
     printf("%c\n", 'K');*/
 
 
-    
-    ret = ft_printf("%+5d\n", +420);
+    int var = -400;
+
+    ret = ft_printf("%+10.5d\n", var);
     printf("ret ==> %d\n", ret);
-    ret = printf("%+5d\n", +420);
+    ret = printf("%+10.5d\n", var);
     printf("ret ==> %d\n", ret);
     return 0;
 }
 
 //printf("hello%-4.2s\nhow old are you %.2f\n tell first char of your name %c", simo, 23.5, 'm');
+
+
+/*
+  --- 
+
+*/
