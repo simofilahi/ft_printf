@@ -10,7 +10,7 @@ int     ft_cmp(char c, const char *p)
 
 int     arg_len(const char *s)
 {
-    char conv[5] = "cspd";
+    char conv[6] = "cspdi";
     int  counter;
     
     counter = 0;
@@ -72,7 +72,7 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     int     len;
     int     i;
     int     flag;
-    const char conv[5] = "cspd";
+    const char conv[6] = "cspdi";
 
     len = arg_len((*s)) + 1;
     if (!(arg = (char *)malloc(sizeof(char) * len)))
@@ -93,7 +93,6 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     {
          while (*(*s) && !ft_cmp(*(*s), &conv[0]))
          {
-
             arg[i++] = *(*s);
             (*s)++;
          }
@@ -144,7 +143,7 @@ int ft_printf(const char *format, ...)
     int ret = 0;
     while (holder->head_ref)
     {
-        if (!holder->head_ref->flag)
+       if (!holder->head_ref->flag)
         {
             ft_putstr_fd(holder->head_ref->arg, 1);
             ret += ft_strlen(holder->head_ref->arg);
@@ -164,7 +163,12 @@ int ft_printf(const char *format, ...)
                 ret += conv_p(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'd')
                 ret += conv_d(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'i')
+                ret += conv_d(holder->head_ref->arg, args);
+        /*    else if (conversion(holder->head_ref->arg) == 'o')
+                ret += conv_o(holder->head_ref->arg, args);*/
         }
+        //printf("flag ==> %d\n arg ===> %s\n", holder->head_ref->flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;
     }
     va_end(args);
@@ -174,40 +178,15 @@ int ft_printf(const char *format, ...)
 int main()
 {
     int ret;
+    //int var = 400;
+   // int var1 = 600;
 
-    // char *var = ft_strdup("Hello World");
-    // ret = ft_printf("%%%%%20p%%%%\n", var);
-    // printf("ret ==> %d\n", ret);
-    // ret = printf("%%%%%20p%%%%\n", var);
-    // printf("ret ==> %d\n", ret);
-  /*  ret = ft_printf("======= %%%.5s%%%%\n", "this a test");
+   /* ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
     printf("ret ==> %d\n", ret);
-    ret = ft_printf("======= %%%%%-10.5s%%%%%%\n", "this a test");
-    printf("ret ==> %d\n", ret);
-    ret = ft_printf("======= %%%5.5s\n%%%%%%\n", "this a test");
-    printf("ret ==> %d\n", ret);
-    printf("\n");
-    printf("***********************************\n");
-    printf("***********************************\n");
-    printf("\n");
-    ret = printf("======= %%%.5s%%%%\n", "this a test");
-    printf("ret ==> %d\n", ret);
-    ret = printf("======= %%%%%-10.5s%%%%%%\n", "this a test");
-    printf("ret ==> %d\n", ret);
-    ret = printf("======= %%%5.5s\n%%%%%%\n", "this a test");
+    ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
     printf("ret ==> %d\n", ret);*/
 
-   /*/ ft_printf("%5p\n", "this a test");
-    printf("%5p\n", "this a test");
-    ft_printf("%c\n", 'K');
-    printf("%c\n", 'K');*/
-
-
-    int var = -400;
-
-    ret = ft_printf("%+10.5d\n", var);
-    printf("ret ==> %d\n", ret);
-    ret = printf("%+10.5d\n", var);
+    ret = printf("%8.5o\n", 100);
     printf("ret ==> %d\n", ret);
     return 0;
 }

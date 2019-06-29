@@ -39,4 +39,5 @@ int     get_precision(char *s);
 int     get_width(char *s);
 int     get_flag(char *s);
 char    *get_length(char *s);
+t_var    fill_structure(char *s);
 #endif
