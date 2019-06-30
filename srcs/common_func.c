@@ -16,25 +16,6 @@ void print(int count, char c)
         ft_putchar(c);
 }
 
-void    c_s_p_common(t_var v, int len, char *s)
-{
-    if (v.width > len)
-    {
-        if (v.f_flag == '-')
-        {
-            (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-            print(v.width - len, ' ');
-        }
-        else
-        {
-            print(v.width - len, ' ');
-            (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-        } 
-    }
-    else
-        (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-}
-
 int   calcu_for_signs(t_var v, int len, int sign)
 {
     if ((v.f_flag == '+' || v.f_flag == '#' || v.s_flag == '#') && (sign == 0))
