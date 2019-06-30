@@ -10,7 +10,7 @@ int     ft_cmp(char c, const char *p)
 
 int     arg_len(const char *s)
 {
-    char conv[6] = "cspdi";
+    char conv[7] = "cspdio";
     int  counter;
     
     counter = 0;
@@ -72,7 +72,7 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     int     len;
     int     i;
     int     flag;
-    const char conv[6] = "cspdi";
+    const char conv[7] = "cspdio";
 
     len = arg_len((*s)) + 1;
     if (!(arg = (char *)malloc(sizeof(char) * len)))
@@ -165,10 +165,10 @@ int ft_printf(const char *format, ...)
                 ret += conv_d(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'i')
                 ret += conv_d(holder->head_ref->arg, args);
-        /*    else if (conversion(holder->head_ref->arg) == 'o')
-                ret += conv_o(holder->head_ref->arg, args);*/
+            else if (conversion(holder->head_ref->arg) == 'o')
+                ret += conv_o(holder->head_ref->arg, args);
         }
-        //printf("flag ==> %d\n arg ===> %s\n", holder->head_ref->flag, holder->head_ref->arg);
+        //printf("f_flag ==> %d\n arg ===> %s\n", holder->head_ref->f_flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;
     }
     va_end(args);
@@ -186,7 +186,9 @@ int main()
     ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
     printf("ret ==> %d\n", ret);*/
 
-    ret = printf("%8.5o\n", 100);
+    ret = ft_printf("%#5.5o\n", 100);
+    printf("ret ==> %d\n", ret);
+    ret = printf("%#5.5o\n", 100);
     printf("ret ==> %d\n", ret);
     return 0;
 }

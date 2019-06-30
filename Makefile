@@ -18,12 +18,13 @@ SRCS_DIR = srcs
 INCS_LIBFT = -I libft/
 INCS = -I includes/ $(INCS_LIBFT)
 CC = gcc 
-CFLAG = -Wextra -Werror -Wall
+Cf_flag = -Wextra -Werror -Wall
 
 SRCS = $(SRCS_DIR)/ft_printf.c \
 	   $(SRCS_DIR)/conversions.c \
 	   $(SRCS_DIR)/conversions_1.c \
-	   $(SRCS_DIR)/hex.c \
+	   $(SRCS_DIR)/bases.c \
+	    $(SRCS_DIR)/common_func.c \
 	   $(SRCS_DIR)/get_propties.c 
 
 OBJECTS = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS:.c=.o)))
@@ -38,7 +39,7 @@ $(OBJS_DIR) :
 	@mkdir -p $(OBJS_DIR)
 
 $(OBJS_DIR)/%.o : $(SRCS_DIR)/%.c
-	@$(CC) $(CFLAG) $(INCS) -c $< -o $@
+	@$(CC) $(Cf_flag) $(INCS) -c $< -o $@
 
 clean:
 	@make -C libft/ clean

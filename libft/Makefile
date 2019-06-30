@@ -12,7 +12,7 @@
 
 NAME = libft.a
 SRCS = *.c 
-FLAGS = -Wextra -Werror -Wall  
+f_flagS = -Wextra -Werror -Wall  
 HEADERS = libft.h
 OBJ = $(SRCS:%.c=%.o)
 
@@ -22,7 +22,7 @@ ED = \033[0m
 all : $(NAME)
 
 $(NAME) :
-	@gcc -c $(FLAGS) $(SRCS) -I .
+	@gcc -c $(f_flagS) $(SRCS) -I .
 	@echo "$(BoldBlue)Build Static Library$(ED)"
 	@ar rc $(NAME) $(OBJ)
 

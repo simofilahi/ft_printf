@@ -20,5 +20,6 @@ int main()
       printf("ret ==> %d\n", ret);*/
     ret = printf("%-1c\n", 'm');
     printf("ret ==> %d\n", ret);
+    printf("%lu", sizeof(long long int));
     return 0;
 }

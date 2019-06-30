@@ -24,20 +24,34 @@ typedef struct s_var
 {
    int      pres;
    int      width;
-   int      flag;
+   int      f_flag;
+   int      s_flag;
    char     *length;
 }              t_var;
 
+t_var   fill_structure(char *s);
 char    conversion(char *s);
+int     get_precision(char *s);
+int     get_width(char *s);
+int     get_fflag(char *s);
+int     get_sflag(char *s);
+char    *get_length(char *s);
 int     conv_c(char *s, va_list args);
 int     conv_s(char *s, va_list args);
 int     conv_p(char *s, va_list args);
 int     conv_d(char *s, va_list args);
-char    *hex(int long n);
+int     conv_o(char *s, va_list args);
+int     apply_width_pres(t_var v, int len, char *s, int sign);
+int     apply_pres(t_var v, int len, char *s, int sign);
+int     apply_width(t_var v, int len, char *s, int sign, int flag);
+void    apply_signs(t_var v, int sign);
+int     calcu_for_signs(t_var v, int len, int sign);
+void    c_s_p_common(t_var v, int len, char *s);
+char    *hex(long int n);
+char    *octal(long long int n);
 void    print(int count, char c);
-int     get_precision(char *s);
-int     get_width(char *s);
-int     get_flag(char *s);
-char    *get_length(char *s);
-t_var    fill_structure(char *s);
+char	*ft_llitoa(long long int n);
+
+// 
+void    debug(t_var v);
 #endif

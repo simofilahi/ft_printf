@@ -1,19 +1,14 @@
 #include "libft.h"
 
-int ft_nbrlen(int nbr)
+long long int ft_nbrlen(long long int n)
 {
-    int counter;
+    long long int 	len;
 
-    counter = 1;
-    if (nbr < 0)
-    {
-        nbr *= -1;
-        counter++;
-    }
-    while (nbr / 10 > 0)
-    {
-        nbr /= 10;
-        counter++;
-    }
-    return (counter);
+	len = (n > 0) ? 0 : 1;
+	while (n != 0)
+	{
+		n = n / 10;
+		len++;
+	}
+	return (len);
 }

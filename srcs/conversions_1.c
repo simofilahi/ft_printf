@@ -19,29 +19,12 @@ t_var fill_structure(char *s)
 
     v.pres = get_precision(s);
     v.width = get_width(s);
-    v.flag = get_flag(s);
+    v.f_flag = get_fflag(s);
+    v.s_flag = get_sflag(s);
     v.length = get_length(s);
     return (v);
 }
 
-void    c_s_p_common(t_var v, int len, char *s)
-{
-    if (v.width > len)
-    {
-        if (v.flag == '-')
-        {
-            (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-            print(v.width - len, ' ');
-        }
-        else
-        {
-            print(v.width - len, ' ');
-            (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-        } 
-    }
-    else
-        (len == 1) ? ft_putchar(*s) : ft_putstr(s);
-}
 
 int     conv_c(char *s, va_list args)
 {
@@ -50,7 +33,7 @@ int     conv_c(char *s, va_list args)
 
     v = fill_structure(s);
     c = va_arg(args, int);
-    c_s_p_common(v, 1, &c);
+    apply_width(v, 1, &c, 0, 0);
     return ((v.width > 1) ? v.width : 1);
 }
 
@@ -68,9 +51,9 @@ int     conv_s(char *s, va_list args)
     if (v.pres && v.width == -1)
         ft_putstr(string);
     else if (v.pres == -1 && v.width)
-        c_s_p_common(v, len, string);
+        apply_width(v, len, string, 0, 1);
     else if (v.pres && v.width)
-        c_s_p_common(v, len, string);
+        apply_width_pres(v, len, string, 0);
     return ((v.width > len) ? v.width : len);
 }
 
@@ -90,7 +73,7 @@ int     conv_p(char *s, va_list args)
     ft_strdel(&tmp);
     len = (int)ft_strlen(string);
     if (v.width)
-        c_s_p_common(v, len, string);
+        apply_width(v, len, string, 0, 1);
     else
         ft_putstr(string);
     ft_strdel(&string);
