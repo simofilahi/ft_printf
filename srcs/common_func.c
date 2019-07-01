@@ -39,18 +39,18 @@ int    apply_width(t_var v, int len, char *s, int sign, int flag)
       !(v.f_flag == '#' && v.s_flag == -1))
     {
         (flag == 1) ? apply_signs(v, sign) : 0;
-        (flag == 1) ? ft_putstr(s) : 0;
+        (flag == 1 && len > 1) ? ft_putstr(s) : 0;
         (len == 1) ? ft_putchar(*s) : 0;
         print(v.width - len, ' ');
     }
-    if (v.f_flag == -1 ||\
+    else if (v.f_flag == -1 ||\
         v.f_flag == '0' ||\
         v.f_flag == '+' ||\
        (v.f_flag == '#' && v.s_flag == -1))
     {
         print(v.width - len, ' ');
         (flag == 1) ? apply_signs(v, sign) : 0;
-        (flag == 1) ? ft_putstr(s) : 0;
+        (flag == 1 && len > 1) ? ft_putstr(s) : 0;
         (len == 1) ? ft_putchar(*s) : 0;
     }
     return((v.width > len) ? v.width : len);

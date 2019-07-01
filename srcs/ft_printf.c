@@ -10,7 +10,7 @@ int     ft_cmp(char c, const char *p)
 
 int     arg_len(const char *s)
 {
-    char conv[7] = "cspdio";
+    char conv[10] = "cspdiouxX";
     int  counter;
     
     counter = 0;
@@ -72,7 +72,7 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     int     len;
     int     i;
     int     flag;
-    const char conv[7] = "cspdio";
+    const char conv[10] = "cspdiouxX";
 
     len = arg_len((*s)) + 1;
     if (!(arg = (char *)malloc(sizeof(char) * len)))
@@ -167,6 +167,12 @@ int ft_printf(const char *format, ...)
                 ret += conv_d(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'o')
                 ret += conv_o(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'u')
+                ret += conv_u(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'x')
+                ret += conv_x(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'X')
+                ret += conv_X(holder->head_ref->arg, args);
         }
         //printf("f_flag ==> %d\n arg ===> %s\n", holder->head_ref->f_flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;
@@ -186,9 +192,10 @@ int main()
     ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
     printf("ret ==> %d\n", ret);*/
 
-    ret = ft_printf("%#5.5o\n", 100);
+ 
+    ret = ft_printf("%-#20x\n", 10);
     printf("ret ==> %d\n", ret);
-    ret = printf("%#5.5o\n", 100);
+    ret = printf("%-#20x\n", 10);
     printf("ret ==> %d\n", ret);
     return 0;
 }

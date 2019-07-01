@@ -41,17 +41,19 @@ int     conv_s(char *s, va_list args);
 int     conv_p(char *s, va_list args);
 int     conv_d(char *s, va_list args);
 int     conv_o(char *s, va_list args);
+int     conv_u(char *s, va_list args);
+int     conv_x(char *s, va_list args);
+int     conv_X(char *s, va_list args);
 int     apply_width_pres(t_var v, int len, char *s, int sign);
 int     apply_pres(t_var v, int len, char *s, int sign);
 int     apply_width(t_var v, int len, char *s, int sign, int flag);
 void    apply_signs(t_var v, int sign);
 int     calcu_for_signs(t_var v, int len, int sign);
 void    c_s_p_common(t_var v, int len, char *s);
-char    *hex(long int n);
+char    *hex(long int n, int flag);
 char    *octal(long long int n);
 void    print(int count, char c);
 char	*ft_llitoa(long long int n);
-
 // 
 void    debug(t_var v);
 #endif

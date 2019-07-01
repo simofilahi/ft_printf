@@ -1,24 +1,27 @@
 #include "ft_printf.h"
 
-char    *hex(int long n)
+char    *hex(long int n, int flag)
 {
     int i;
     int res;
-
     char *hexa;
 
     i = 0;
     res = 0;
     if (!(hexa = (char *)malloc(sizeof(char) * 100)))
         return (NULL);
-    while (n / 16 > 0)
+    while (1)
     {
         res = n % 16; 
         if (res < 10)
             hexa[i++] = res + '0';
-        else
+       else if (flag == 0)
             hexa[i++] = res + 'a' - 10;
+        else
+            hexa[i++] = res + 'A' - 10;
         n /= 16;
+        if (n == 0)
+         break ;
     }
     hexa[i] = '\0';
     ft_strrev(hexa);

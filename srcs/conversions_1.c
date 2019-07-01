@@ -67,7 +67,7 @@ int     conv_p(char *s, va_list args)
 
     v = fill_structure(s);
     ret = va_arg(args, long int );
-    string = hex(ret);
+    string = hex(ret, 0);
     tmp = string;
     string = ft_strjoin("0x7", string);
     ft_strdel(&tmp);
