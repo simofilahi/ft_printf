@@ -60,7 +60,7 @@ char			*ft_llitoa(long long int n)
 	if (n < 0)
 	{
 		n = -n;
-		sign = 1;
+		len -= 1;
 	}
 	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);
@@ -70,7 +70,5 @@ char			*ft_llitoa(long long int n)
 		s[len] = (n % 10) + 48;
 		n /= 10;
 	}
-	if (sign)
-		s[0] = '-';
 	return (s);
 }

@@ -141,6 +141,9 @@ int ft_printf(const char *format, ...)
     char *tmp = ft_strdup(format);
     holder = parsing(tmp);
     int ret = 0;
+    int i;
+
+    i = 0;
     while (holder->head_ref)
     {
        if (!holder->head_ref->flag)
@@ -181,24 +184,7 @@ int ft_printf(const char *format, ...)
     return (ret);
 }
 
-int main()
-{
-    int ret;
-    //int var = 400;
-   // int var1 = 600;
 
-   /* ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
-    printf("ret ==> %d\n", ret);
-    ret = ft_printf("%%%%%%%%%+7.6d%%%%%%% %%%%%%%%%%%% %%%%%%+7.6i\n", var, var1);
-    printf("ret ==> %d\n", ret);*/
-
- 
-    ret = ft_printf("%-#20x\n", 10);
-    printf("ret ==> %d\n", ret);
-    ret = printf("%-#20x\n", 10);
-    printf("ret ==> %d\n", ret);
-    return 0;
-}
 
 //printf("hello%-4.2s\nhow old are you %.2f\n tell first char of your name %c", simo, 23.5, 'm');
 

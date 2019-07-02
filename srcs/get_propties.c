@@ -1,5 +1,21 @@
 #include "ft_printf.h"
 
+
+int  is_found(char c)
+{
+    char conv[10] = "cspdiouxX";
+    int i;
+
+    i = 0;
+    while (i < 10)
+    {
+        if (conv[i] == c)
+            return (1);
+        i++;
+    }
+    return (0);
+}
+
 int get_precision(char *s)
 {
     size_t len;
@@ -47,7 +63,8 @@ int get_fflag(char *s)
             (*(s + 1) == '-' ||\
              *(s + 1) == '0' ||\
              *(s + 1) == '+' ||\
-             *(s + 1) == '#'))
+             *(s + 1) == '#' || \
+             *(s + 1) == ' '))
                  return (*(s + 1));
         s++;
     }
