@@ -13,36 +13,37 @@ char    conversion(char *s)
     return ('0');
 }
 
-t_var fill_structure(char *s, char c)
-{
-    t_var v;
-
-    v.pres = get_precision(s);
-    v.width = get_width(s);
-    v.f_flag = get_fflag(s);
-    v.s_flag = get_sflag(s);
-    v.length = get_length(s);
-    v.type = c;
-    return (v);
-}
-
 
 int     conv_c(char *s, va_list args)
 {
     t_var v;
     char c;
+    char *string;
+    int  len;
 
     v = fill_structure(s, 'c');
     c = va_arg(args, int);
-    apply_width(v, 1, &c, 0);
-    return ((v.width > 1) ? v.width : 1);
+    string = apply_width(v, &c, 1);
+    len = (int)ft_strlen(string);
+    if (v.f_flag == '-' && c == 0)
+    {
+        ft_putchar(c);
+        ft_putstr(string);
+    }
+    else if (c == 0)
+    {
+        ft_putstr(string);
+        ft_putchar(c);
+    }
+    else
+        ft_putstr(string);
+    return ((c == 0) ? len + 1 : len);
 }
 
 int     conv_s(char *s, va_list args)
 {
     t_var v;
     char *string;
-    int  ret;
     int  len;
 
     v = fill_structure(s, 's');
@@ -50,19 +51,15 @@ int     conv_s(char *s, va_list args)
     if (string == NULL)
         string = ft_strdup("(null)");
     len = (int)ft_strlen(string);
-    ret = len;
     if (v.pres && v.width == -1)
-    {
-       ret = apply_pres(v, len, &string, 0);
-       ft_putstr(string);
-    }
+        string = apply_pres(v, string, 0);
     else if (v.pres == -1 && v.width)
-        ret = apply_width(v, len, string, 1);
+        string = apply_width(v, string, 0);
     else if (v.pres && v.width)
-        ret = apply_width_pres(v, len, string, 0);
-    else
-        ft_putstr(string);
-    return (ret);
+        string = apply_width_pres(v, string, string, 0, 0);
+    ft_putstr(string);
+    len = (int)ft_strlen(string);
+    return (len);
 }
 
 int     conv_p(char *s, va_list args)
@@ -79,11 +76,10 @@ int     conv_p(char *s, va_list args)
     tmp = string;
     string = ft_strjoin("0x", string);
     ft_strdel(&tmp);
+    if (v.width != -1)
+       string = apply_width(v, string, 0);
+    ft_putstr(string);
     len = (int)ft_strlen(string);
-    if (v.width)
-        apply_width(v, len, string, 1);
-    else
-        ft_putstr(string);
     ft_strdel(&string);
-    return ((v.width > len) ? v.width : len);
+    return (len);
 }

@@ -1,5 +1,34 @@
 #include "ft_printf.h"
 
+t_var fill_structure(char *s, char c)
+{
+    t_var v;
+
+    v.pres = get_precision(s);
+    v.width = get_width(s);
+    v.f_flag = get_fflag(s);
+    v.s_flag = get_sflag(s);
+    v.f_flag = (v.width == v.f_flag - '0') ? -1 : v.f_flag;
+    v.s_flag = (v.width == v.s_flag - '0') ? -1 : v.s_flag;
+    if ((v.f_flag == '-' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == '-'))
+    {
+        v.f_flag = '-';
+        v.s_flag = -1;
+    }
+    else if ((v.f_flag == ' ' && v.s_flag == '+') || (v.f_flag == '+' && v.s_flag == ' '))
+    {
+        v.f_flag = '+';
+        v.s_flag = -1;
+    }
+  /*  else if ((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' '))
+    {
+        v.f_flag = '0';
+        v.s_flag = -1;
+    }*/
+    v.length = get_length(s);
+    v.type = c;
+    return (v);
+}
 
 int  is_found(char c)
 {
@@ -79,7 +108,8 @@ int get_sflag(char *s)
             (*(s + 2) == '-' ||\
              *(s + 2) == '0' ||\
              *(s + 2) == '+' ||\
-             *(s + 2) == '#'))
+             *(s + 2) == '#' ||\
+             *(s + 2) == ' '))
                  return (*(s + 2));
         s++;
     }

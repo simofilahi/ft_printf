@@ -17,10 +17,10 @@ void debug(t_var v)
     ft_putnbr(v.width);
     ft_putchar('\n');
     ft_putstr("v.f_flag ==> ");
-    ft_putnbr(v.f_flag);
+    ft_putchar(v.f_flag);
     ft_putchar('\n');
     ft_putstr("v.s_flag ==> ");
-    ft_putnbr(v.s_flag);
+    ft_putchar(v.s_flag);
     ft_putchar('\n');
     ft_putstr("v.v_length ==> ");
     ft_putchar('\n');
@@ -35,49 +35,58 @@ void print(int count, char c)
         ft_putchar(c);
 }
 
-int    apply_width(t_var v, int len, char *s, int flag)
+char    *apply_width(t_var v, char *str, int flag)
 {
-    if (v.f_flag == '-')
+     char *src;
+     int len;
+
+    str = (flag == 1) ? ft_strsub(str, 0, 1) : str;
+    src = NULL;
+    len = (int)ft_strlen(str);
+    if ((v.f_flag == '-' || v.s_flag == '-') && v.width > len)
     {
-        ft_putchar('H');
-        (flag == 1 && len > 1) ? ft_putstr(s) : 0;
-        (len == 1) ? ft_putchar(*s) : 0;
-        print(v.width - len, ' ');
+        src = ft_strnew(v.width - len);
+        src = (char *)ft_memset(src, ' ', v.width - len);
+        str = ft_strjoin(str, src);
     }
-    else
+    else if (v.width > len)
     {
-        //ft_putchar('H');
-        print(v.width - len, ' ');
-        (flag == 1 && len > 1) ? ft_putstr(s) : 0;
-        (len == 1) ? ft_putchar(*s) : 0;
+       src = ft_strnew(v.width - len);
+       src = (char *)memset(src, ' ', v.width - len);
+       str =  ft_strjoin(src, str);
     }
-    return((v.width > len) ? v.width : len);
+    (src != NULL) ? ft_strdel(&src) : 0;
+    return(str);
 }
 
-
-int    apply_pres(t_var v, int len, char **str, int sign)
+char    *apply_pres(t_var v, char *str, int flag)
 {
     char *src;
+    int len;
 
-    (void)sign;
+    (void)flag;
     src = NULL;
-    if (v.pres < len && v.type == 's')
-        *str = ft_strsub(*str, 0, v.pres);
+    len = (int)ft_strlen(str);
+    if (str[0] == '0' && str[1] == '\0' && v.pres == 0)
+        str = ft_strdup("");
+    else if (v.pres < len && v.type == 's')
+        str = ft_strsub(str, 0, v.pres);
     else if (v.pres > len && v.type != 's')
     {
        src = ft_strnew(v.pres - len);
        src = (char *)ft_memset(src, '0', v.pres - len);
-       *str = ft_strjoin(src, *str);
+       str = ft_strjoin(src, str);
     }
-    len = (int)ft_strlen(*str);
-    return (len);
+    return (str);
 }
 
-int     apply_width_pres(t_var v, int len, char *s, int sign)
+char    *apply_width_pres(t_var v, char *str, char *conv, int n, int flag)
 {
-    int ret;
+    int len;
 
-    len = apply_pres(v, len, &s, sign);
-    ret = apply_width(v, len, s, 1);
-    return(ret);
+    len = (int)ft_strlen(str);
+    str = apply_pres(v, str, flag);
+    str = apply_flags(v, str, conv, n);
+    str = apply_width(v, str, flag);
+    return(str);
 }

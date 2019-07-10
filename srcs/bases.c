@@ -49,7 +49,7 @@ char    *octal(long long int n)
     return (octal);
 }
 
-char			*ft_llitoa(long long int n)
+char			*ft_llitoa(unsigned long long int n)
 {
 	char                *s;
 	int                 sign;
@@ -57,11 +57,6 @@ char			*ft_llitoa(long long int n)
 
 	sign = 0;
 	len = ft_nbrlen(n);
-	if (n < 0)
-	{
-		n = -n;
-		len -= 1;
-	}
 	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);
 	s[len] = '\0';
