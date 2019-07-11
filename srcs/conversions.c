@@ -37,10 +37,18 @@ char    *apply_flag_zero(t_var v, char *str, int len, int long long n)
 char    *apply_flags(t_var v, char *str, char *conv, int long long n)
 {
     int len;
+    int flag = 0;
 
+     if ((n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
+        (n < 0 && (v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres == -1)) ||\
+        (n < 0 && ((v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres != -1)))
+    )
+    {
+        flag = 1;
+        str = ft_strjoin("-", str);
+    }
      if (n < 0)
     {
-        //printf("HI\n");
         v.f_flag = (v.f_flag == ' ') ? -1 : v.f_flag;
         v.s_flag = (v.s_flag == ' ') ? -1 : v.s_flag;
     }
@@ -79,6 +87,8 @@ char    *apply_flags(t_var v, char *str, char *conv, int long long n)
         str = apply_flag_space(v, str);
     else if ((v.f_flag == '0' || v.s_flag == '0') && v.type != 's')
         str = apply_flag_zero(v, str, len, n);
+    if (!flag && n < 0)
+        str = ft_strjoin("-", str);
     return (str);
 }
 
@@ -102,7 +112,6 @@ int     conv_d(char *s, va_list args)
     int long long          n;
     int                    len;
     char                   *str;
-    int                    flag = 0;
     unsigned long long int nbr;
 
     v = fill_structure(s, 'i');
@@ -110,14 +119,6 @@ int     conv_d(char *s, va_list args)
     casting(v, &n, args);
     nbr = (n < 0) ? n * -1 : n;
     str = ft_llitoa(nbr);
-    if ((n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
-        (n < 0 && (v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres == -1)) ||\
-        (n < 0 && ((v.f_flag != '0' && v.s_flag != '0') || (v.f_flag == -1 && v.s_flag == -1)) && (v.width != -1) && (v.pres != -1))
-    )
-    {
-        flag = 1;
-        str = ft_strjoin("-", str);
-    }
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
@@ -125,18 +126,15 @@ int     conv_d(char *s, va_list args)
     }
     else if (v.width != -1 && v.pres == -1)
     {
-
         str = apply_flags(v, str, s, n);
-        //printf("str after -->%s\n", str);
         str = apply_width(v, str, n, 0);
-        //printf("str two -->%s\n", str);
     }
     else if (v.width != -1 && v.pres != -1)
         str = apply_width_pres(v, str, s, n, 0);
     else
+    {
         str = apply_flags(v, str, s, n);
-    if (!flag && n < 0)
-        str = ft_strjoin("-", str);
+    }
     ft_putstr(str);
     len = (int)ft_strlen(str);
     return (len);

@@ -85,13 +85,9 @@ char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int f
 {
     int len;
 
-    //printf("str one ==>%s\n", str);
     len = (int)ft_strlen(str);
     str = apply_pres(v, str, n, flag);
-    //printf("str two ==>%s\n", str);
     str = apply_flags(v, str, conv, n);
-   // printf("str three ==>%s\n", str);
     str = apply_width(v, str, n, flag);
-    //printf("str four ==> %s\n", str);
     return(str);
 }
