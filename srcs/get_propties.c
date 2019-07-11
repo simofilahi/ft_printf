@@ -123,9 +123,9 @@ char    *get_length(char *s)
     char *ret;
 
     len = ft_strlen(s);
-    i = len - 2;
+    i = len - 1;
     while (s[i]  && ft_isalpha(s[i]))
         i--;
-    ret = ft_strsub(s, i + 1, len - 2);
+    ret = ft_strsub(s, i + 1, len - 1);
     return (ret);
 }

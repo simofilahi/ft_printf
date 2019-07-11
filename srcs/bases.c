@@ -52,10 +52,8 @@ char    *octal(long long int n)
 char			*ft_llitoa(unsigned long long int n)
 {
 	char                *s;
-	int                 sign;
 	long long int 		len;
 
-	sign = 0;
 	len = ft_nbrlen(n);
 	if (!(s = (char *)malloc(sizeof(char) * len + 1)))
 		return (NULL);

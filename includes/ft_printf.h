@@ -46,10 +46,10 @@ int     conv_X(char *s, va_list args);
 /*
 ** handlers
 */
-char    *apply_width_pres(t_var v, char *str, char *conv, int n, int flag);
-char    *apply_pres(t_var v, char *s, int sign);
-char    *apply_width(t_var v, char *s, int flag);
-char    *apply_flags(t_var v, char *str, char *conv, int n);
+char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int flag);
+char    *apply_pres(t_var v, char *s, int long long n, int sign);
+char    *apply_width(t_var v, char *s, int long long n, int flag);
+char    *apply_flags(t_var v, char *s, char *conv, int long long n);
 /*
 ** get properties
 */

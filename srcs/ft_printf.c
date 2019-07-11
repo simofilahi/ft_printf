@@ -158,15 +158,15 @@ int ft_printf(const char *format, ...)
         }
         else
         {
-            if (conversion(holder->head_ref->arg) == 'c')
+         /*   if (conversion(holder->head_ref->arg) == 'c')
                 ret += conv_c(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 's')
                 ret += conv_s(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'p')
-                ret += conv_p(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'd')
+                ret += conv_p(holder->head_ref->arg, args);*/
+           // else if (conversion(holder->head_ref->arg) == 'd')
                 ret += conv_d(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'i')
+           /* else if (conversion(holder->head_ref->arg) == 'i')
                 ret += conv_d(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'o')
                 ret += conv_o(holder->head_ref->arg, args);
@@ -175,7 +175,7 @@ int ft_printf(const char *format, ...)
             else if (conversion(holder->head_ref->arg) == 'x')
                 ret += conv_x(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'X')
-                ret += conv_X(holder->head_ref->arg, args);
+                ret += conv_X(holder->head_ref->arg, args);*/
         }
         //printf("f_flag ==> %d\n arg ===> %s\n", holder->head_ref->f_flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;

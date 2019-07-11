@@ -18,7 +18,7 @@ char    *apply_flag_space(t_var v, char *str)
     return (str);
 }
 
-char    *apply_flag_zero(t_var v, char *str, int len, int n)
+char    *apply_flag_zero(t_var v, char *str, int len, int long long n)
 {
     char *src;
 
@@ -34,21 +34,42 @@ char    *apply_flag_zero(t_var v, char *str, int len, int n)
     return (str);
 }
 
-char    *apply_flags(t_var v, char *str, char *conv, int n)
+char    *apply_flags(t_var v, char *str, char *conv, int long long n)
 {
     int len;
 
-    len = (int)ft_strlen(str);
-    (void)conv;
-    if (n < 0)
+     if (n < 0)
     {
+        //printf("HI\n");
         v.f_flag = (v.f_flag == ' ') ? -1 : v.f_flag;
         v.s_flag = (v.s_flag == ' ') ? -1 : v.s_flag;
     }
+    if (n < 0 && v.f_flag == '+' && v.s_flag == '0' && v.width != -1)
+        len = (int)ft_strlen(str);
+    else if ((n < 0 && (v.f_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
+        (n < 0 && (v.f_flag == '0') && (v.width != -1) && (v.pres == -1)) ||\
+        (n < 0 && (v.f_flag != '0') && (v.width != -1) && (v.pres == -1)) ||\
+        (n < 0 && (v.f_flag != '0') && (v.width != -1) && (v.pres != -1)) ||\
+        (n < 0 && (v.f_flag == ' '))
+        )
+        {
+            len = (int)ft_strlen(str) + 1;
+        }
+    else
+        len = (int)ft_strlen(str);
+    (void)conv;
+    // if (n < 0)
+    // {
+    //     v.f_flag = (v.f_flag == ' ') ? -1 : v.f_flag;
+    //     v.s_flag = (v.s_flag == ' ') ? -1 : v.s_flag;
+    // }
     if (v.f_flag == '+' || v.s_flag == '+')
         len += 1;
     if ((v.f_flag == '+' || v.s_flag == '+') && v.type == 'i' && n >= 0 && v.s_flag != '0')
+    {
+         
         str = ft_strjoin("+", str);
+    }
     else if (((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' ')) && (v.type != 's'))
     {
         str = apply_flag_zero(v, str, len + 1, n);
@@ -85,24 +106,30 @@ int     conv_d(char *s, va_list args)
     unsigned long long int nbr;
 
     v = fill_structure(s, 'i');
+    //debug(v);
     casting(v, &n, args);
     nbr = (n < 0) ? n * -1 : n;
     str = ft_llitoa(nbr);
-    if (n < 0 && !(v.f_flag == '0' || v.s_flag == '0' || v.pres != -1))
+    if ((n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
+        (n < 0 && (v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres == -1)) ||\
+        (n < 0 && ((v.f_flag != '0' && v.s_flag != '0') || (v.f_flag == -1 && v.s_flag == -1)) && (v.width != -1) && (v.pres != -1))
+    )
     {
         flag = 1;
         str = ft_strjoin("-", str);
     }
     if (v.width == -1 && v.pres != -1)
     {
-        str = apply_pres(v, str, 0);
+        str = apply_pres(v, str, n,0);
         str = apply_flags(v, str, s, n);
     }
     else if (v.width != -1 && v.pres == -1)
     {
-        str = apply_flags(v, str, s,n);
-        printf("str one ==>%s\n", str);
-        str = apply_width(v, str, 0);
+
+        str = apply_flags(v, str, s, n);
+        //printf("str after -->%s\n", str);
+        str = apply_width(v, str, n, 0);
+        //printf("str two -->%s\n", str);
     }
     else if (v.width != -1 && v.pres != -1)
         str = apply_width_pres(v, str, s, n, 0);
@@ -115,9 +142,9 @@ int     conv_d(char *s, va_list args)
     return (len);
 }
 
-int     conv_o(char *s, va_list args)
+/*int     conv_o(char *s, va_list args)
 {
-    t_var v;
+    t_var v;m
     unsigned int  n;
     int len;
     char *str;
@@ -220,4 +247,4 @@ int     conv_X(char *s, va_list args)
        str = apply_width_pres(v, str, s, n, 0);
     ft_strdel(&str);
     return (len);
-}
+}*/

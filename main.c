@@ -1,7 +1,6 @@
 #include <stdio.h>
 #include "includes/ft_printf.h"
-
-//#define INT_MIN -214748364
+#include <limits.h>
 
 int main()
 {
@@ -20,9 +19,9 @@ int main()
 
    // int var = 0;
   
-    ret = ft_printf("%05d\n", -10);
+    ret = ft_printf("%.5d|%-.5d|%+.5d|% .5d|%0.5d", LLONG_MAX, LLONG_MAX, LLONG_MAX, LLONG_MAX, LLONG_MAX);
     printf("ret %d\n", ret);
-     ret = printf("%05d\n", -10);
+    ret = printf("%.5d|%-.5d|%+.5d|% .5d|%0.5d", LLONG_MAX, LLONG_MAX, LLONG_MAX, LLONG_MAX, LLONG_MAX);
     printf("ret %d\n", ret);
     return 0;
 }

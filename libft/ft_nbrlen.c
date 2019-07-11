@@ -1,6 +1,6 @@
 #include "libft.h"
 
-long long int ft_nbrlen(long long int n)
+long long int ft_nbrlen(unsigned long long int n)
 {
     long long int 	len;
 

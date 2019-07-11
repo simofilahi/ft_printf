@@ -14,7 +14,7 @@ char    conversion(char *s)
 }
 
 
-int     conv_c(char *s, va_list args)
+/*int     conv_c(char *s, va_list args)
 {
     t_var v;
     char c;
@@ -82,4 +82,4 @@ int     conv_p(char *s, va_list args)
     len = (int)ft_strlen(string);
     ft_strdel(&string);
     return (len);
-}
+}*/

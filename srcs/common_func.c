@@ -8,6 +8,14 @@ int is_dot(char *s)
     return (0);
 }
 
+void print(int count, char c)
+{
+    if (count <= 0)
+        return ;
+    while (count--)
+        ft_putchar(c);
+}
+
 void debug(t_var v)
 {
     ft_putstr("v.pres ==> ");
@@ -27,22 +35,14 @@ void debug(t_var v)
     ft_putendl(v.length);
 }
 
-void print(int count, char c)
+char    *apply_width(t_var v, char *str, int long long n, int flag)
 {
-    if (count <= 0)
-        return ;
-    while (count--)
-        ft_putchar(c);
-}
-
-char    *apply_width(t_var v, char *str, int flag)
-{
-     char *src;
-     int len;
+     char   *src;
+     int    len;
 
     str = (flag == 1) ? ft_strsub(str, 0, 1) : str;
+    len = (n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.pres == -1)) ? (int)ft_strlen(str) + 1 : (int)ft_strlen(str);
     src = NULL;
-    len = (int)ft_strlen(str);
     if ((v.f_flag == '-' || v.s_flag == '-') && v.width > len)
     {
         src = ft_strnew(v.width - len);
@@ -59,12 +59,13 @@ char    *apply_width(t_var v, char *str, int flag)
     return(str);
 }
 
-char    *apply_pres(t_var v, char *str, int flag)
+char    *apply_pres(t_var v, char *str, int long long n, int flag)
 {
-    char *src;
-    int len;
+    char    *src;
+    int     len;
 
     (void)flag;
+    (void)n;
     src = NULL;
     len = (int)ft_strlen(str);
     if (str[0] == '0' && str[1] == '\0' && v.pres == 0)
@@ -80,13 +81,17 @@ char    *apply_pres(t_var v, char *str, int flag)
     return (str);
 }
 
-char    *apply_width_pres(t_var v, char *str, char *conv, int n, int flag)
+char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int flag)
 {
     int len;
 
+    //printf("str one ==>%s\n", str);
     len = (int)ft_strlen(str);
-    str = apply_pres(v, str, flag);
+    str = apply_pres(v, str, n, flag);
+    //printf("str two ==>%s\n", str);
     str = apply_flags(v, str, conv, n);
-    str = apply_width(v, str, flag);
+   // printf("str three ==>%s\n", str);
+    str = apply_width(v, str, n, flag);
+    //printf("str four ==> %s\n", str);
     return(str);
 }
