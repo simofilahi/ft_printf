@@ -29,6 +29,7 @@ char    *apply_flag_zero(t_var v, char *str, int len, int long long n)
         ft_memset(src, '0', v.width - len);
         str = ft_strjoin(src, str);
     }
+    //
     if (v.f_flag == '+' && v.type == 'i' && n >= 0)
         str = ft_strjoin("+", str);
     return (str);
@@ -50,7 +51,7 @@ char    *apply_flag_hash(t_var v, char *str, int len, int long long n)
     else if (v.f_flag == ' ' || v.s_flag == ' ')
         str = apply_flag_space(v, str);
     if (v.type == 'o' && \
-       ((n > 0) || (n == 0 && v.pres == 0)) &&\
+       ((n > 0 && !(v.pres == len)) || (n == 0 && v.pres == 0)) &&\
        (v.f_flag == '#' || v.s_flag == '#') &&\
         ft_strcmp(str, tmp) == 0)
     {

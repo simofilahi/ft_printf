@@ -1,0 +1,35 @@
+main.c:13:57: warning: format specifies type 'unsigned char' but the argument has type 'unsigned long long' [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                 ~~~~~~~~                               ^~~~~~~~~~
+                 %-#.5llo
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include/limits.h:100:20: note: expanded from macro 'ULLONG_MAX'
+#define ULLONG_MAX (__LONG_LONG_MAX__*2ULL+1ULL)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main.c:13:29: warning: flag '0' is ignored when flag '-' is present [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                          ~~^~~~~~
+main.c:13:69: warning: format specifies type 'unsigned char' but the argument has type 'unsigned long long' [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                          ~~~~~~~~                                  ^~~~~~~~~~
+                          %-0.5llo
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include/limits.h:100:20: note: expanded from macro 'ULLONG_MAX'
+#define ULLONG_MAX (__LONG_LONG_MAX__*2ULL+1ULL)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main.c:13:81: warning: format specifies type 'unsigned char' but the argument has type 'unsigned long long' [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                                   ~~~~~~~~                                     ^~~~~~~~~~
+                                   %#0.5llo
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include/limits.h:100:20: note: expanded from macro 'ULLONG_MAX'
+#define ULLONG_MAX (__LONG_LONG_MAX__*2ULL+1ULL)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+main.c:13:48: warning: flag '0' is ignored when flag '-' is present [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                                            ~~~^~~~~~
+main.c:13:93: warning: format specifies type 'unsigned char' but the argument has type 'unsigned long long' [-Wformat]
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+                                            ~~~~~~~~~                                       ^~~~~~~~~~
+                                            %-#0.5llo
+/Applications/Xcode.app/Contents/Developer/Toolchains/XcodeDefault.xctoolchain/usr/lib/clang/9.0.0/include/limits.h:100:20: note: expanded from macro 'ULLONG_MAX'
+#define ULLONG_MAX (__LONG_LONG_MAX__*2ULL+1ULL)
+                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+6 warnings generated.

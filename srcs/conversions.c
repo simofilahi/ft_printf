@@ -45,7 +45,9 @@ int     conv_o(char *s, va_list args)
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
+          //  printf("before str ==>%s\n", str);
         str = apply_flags(v, str, s, n);
+        // printf("after str ==>%s\n", str);
     }
     else if (v.width != -1 && v.pres == -1)
     {
@@ -149,9 +151,7 @@ int     conv_u(char *s, va_list args)
     else if (v.width != -1 && v.pres != -1)
         str = apply_width_pres(v, str, s, n, 0);
     else
-    {
         str = apply_flags(v, str, s, n);
-    }
     ft_putstr(str);
     len = (int)ft_strlen(str);
     return (len);
@@ -212,9 +212,7 @@ int     conv_X(char *s, va_list args)
     else if (v.width != -1 && v.pres != -1)
         str = apply_width_pres(v, str, s, n, 0);
     else
-    {
         str = apply_flags(v, str, s, n);
-    }
     ft_putstr(str);
     len = (int)ft_strlen(str);
     return (len);

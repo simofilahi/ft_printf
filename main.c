@@ -8,9 +8,9 @@ int main()
 
 
   
-    ret = ft_printf("%X|%-X|%#X|%0X", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
+    ret = ft_printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
     printf("ret %d\n", ret);
-   ret = printf("%X|%-X|%#X|%0X", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
+   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
     printf("ret %d\n", ret);
     return 0;
 }

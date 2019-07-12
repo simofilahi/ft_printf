@@ -45,6 +45,10 @@ int     arg_len(const char *s)
     return (counter);
 }
 
+/*
+** - create linked list for hold splited arguments;
+*/
+
 void    create_list(t_arg **head_ref, t_arg **tail_ref, char *s, int flag)
 {
     t_arg *new_node;
