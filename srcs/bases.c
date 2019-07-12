@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char    *hex(long int n, int flag)
+char    *hex(unsigned long long int n, int flag)
 {
     int i;
     int res;

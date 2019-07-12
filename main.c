@@ -6,22 +6,11 @@ int main()
 {
     int ret;
 
-   // int long long var = 400000000000000000;
-   // ret = ft_printf("%.5 000 000 000d\n", 100);
-  //  printf("ret ==> %d\n", ret);
-  //  printf("**************************\n");
-  //  printf("**************************\n");
 
-    //ret = ft_printf("%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
-//    printf("ret ==> %d\n", ret);
-  //  ret = printf("%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
-    //printf("ret ==> %d\n", ret);
-
-   // int var = 0;
   
-    ret = ft_printf("|%#01.o|", 0U, 0U, 0U, 0U);
+    ret = ft_printf("%X|%-X|%#X|%0X", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
     printf("ret %d\n", ret);
-   ret = printf("|%#01.o|", 0U, 0U, 0U, 0U);
+   ret = printf("%X|%-X|%#X|%0X", UINT_MAX, UINT_MAX, UINT_MAX, UINT_MAX);
     printf("ret %d\n", ret);
     return 0;
 }

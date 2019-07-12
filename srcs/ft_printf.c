@@ -170,12 +170,12 @@ int ft_printf(const char *format, ...)
                 ret += conv_d(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'o')
                 ret += conv_o(holder->head_ref->arg, args);
-            /*else if (conversion(holder->head_ref->arg) == 'u')
+            else if (conversion(holder->head_ref->arg) == 'u')
                 ret += conv_u(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'x')
                 ret += conv_x(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'X')
-                ret += conv_X(holder->head_ref->arg, args);*/
+                ret += conv_X(holder->head_ref->arg, args);
         }
         //printf("f_flag ==> %d\n arg ===> %s\n", holder->head_ref->f_flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;

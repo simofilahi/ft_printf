@@ -64,7 +64,7 @@ int     ft_printf(const char *format, ...);
 t_var   fill_structure(char *s, char c);
 char    conversion(char *s);
 char    *get_length(char *s);
-char    *hex(long int n, int flag);
+char    *hex(unsigned long long int n, int flag);
 char    *octal(unsigned long long int n);
 void    print(int count, char c);
 char	*ft_llitoa(unsigned long long int n);

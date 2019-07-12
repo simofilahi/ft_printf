@@ -1,4 +1,0 @@
-main.c:24:33: warning: data argument not used by format string [-Wformat-extra-args]
-   ret = printf("|%#01.o|", 0U, 0U, 0U, 0U);
-                ~~~~~~~~~~      ^
-1 warning generated.

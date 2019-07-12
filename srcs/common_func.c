@@ -88,7 +88,9 @@ char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int f
 
     len = (int)ft_strlen(str);
     str = apply_pres(v, str, n, flag);
+   // printf("str two %s\n", str);
     str = apply_flags(v, str, conv, n);
+   // printf("str two %s\n", str);
     str = apply_width(v, str, n, flag);
     return(str);
 }
