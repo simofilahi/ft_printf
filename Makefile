@@ -22,6 +22,7 @@ C_FLAG = -Wextra -Werror -Wall
 
 SRCS = $(SRCS_DIR)/ft_printf.c \
 	   $(SRCS_DIR)/conversions.c \
+	   $(SRCS_DIR)/conversions_1.c \
 	   $(SRCS_DIR)/bases.c \
 	   $(SRCS_DIR)/common_func.c \
 	   $(SRCS_DIR)/get_propties.c 

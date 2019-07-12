@@ -40,7 +40,8 @@ char    *apply_width(t_var v, char *str, int long long n, int flag)
      char   *src;
      int    len;
 
-    str = (flag == 1) ? ft_strsub(str, 0, 1) : str;
+    (void)flag;
+   // str = (v.type == 's') ? ft_strsub(str, 0, 1) : str;
     len = (n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.pres == -1)) ? (int)ft_strlen(str) + 1 : (int)ft_strlen(str);
     src = NULL;
     if ((v.f_flag == '-' || v.s_flag == '-') && v.width > len)

@@ -28,7 +28,7 @@ char    *hex(long int n, int flag)
     return (hexa);
 }
 
-char    *octal(long long int n)
+char    *octal(unsigned long long int n)
 {
     char *octal;
     int i;

@@ -118,14 +118,17 @@ int get_sflag(char *s)
 
 char    *get_length(char *s)
 {
-    size_t len;
+    int j;
     int i;
     char *ret;
 
-    len = ft_strlen(s);
-    i = len - 1;
-    while (s[i]  && ft_isalpha(s[i]))
-        i--;
-    ret = ft_strsub(s, i + 1, len - 1);
+    j = 0;
+    i = 0;
+    while (s[i] && !ft_isalpha(s[i]))
+        i++;
+    j = i;
+    while (s[i] && !is_found(s[i]))
+        i++;
+    ret = ft_strsub(s, j, i);
     return (ret);
 }

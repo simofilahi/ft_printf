@@ -19,9 +19,9 @@ int main()
 
    // int var = 0;
   
-    ret = ft_printf("%-+23d|%- 23d|%-023d|%+ 23d|%+023d|% 023d|%-+ 023d", LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN);
+    ret = ft_printf("|%#01.o|", 0U, 0U, 0U, 0U);
     printf("ret %d\n", ret);
-    ret = printf("%-+23d|%- 23d|%-023d|%+ 23d|%+023d|% 023d|%-+ 023d", LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN, LONG_MIN);
+   ret = printf("|%#01.o|", 0U, 0U, 0U, 0U);
     printf("ret %d\n", ret);
     return 0;
 }

@@ -158,19 +158,19 @@ int ft_printf(const char *format, ...)
         }
         else
         {
-         /*   if (conversion(holder->head_ref->arg) == 'c')
+            if (conversion(holder->head_ref->arg) == 'c')
                 ret += conv_c(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 's')
                 ret += conv_s(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'p')
-                ret += conv_p(holder->head_ref->arg, args);*/
-           // else if (conversion(holder->head_ref->arg) == 'd')
+                ret += conv_p(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'd')
                 ret += conv_d(holder->head_ref->arg, args);
-           /* else if (conversion(holder->head_ref->arg) == 'i')
+            else if (conversion(holder->head_ref->arg) == 'i')
                 ret += conv_d(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'o')
                 ret += conv_o(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'u')
+            /*else if (conversion(holder->head_ref->arg) == 'u')
                 ret += conv_u(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'x')
                 ret += conv_x(holder->head_ref->arg, args);
