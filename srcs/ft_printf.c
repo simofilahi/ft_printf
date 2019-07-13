@@ -10,7 +10,7 @@ int     ft_cmp(char c, const char *p)
 
 int     arg_len(const char *s)
 {
-    char conv[10] = "cspdiouxX";
+    char conv[10] = "cspdiouxXf";
     int  counter;
     
     counter = 0;
@@ -76,7 +76,7 @@ void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
     int     len;
     int     i;
     int     flag;
-    const char conv[10] = "cspdiouxX";
+    const char conv[10] = "cspdiouxXf";
 
     len = arg_len((*s)) + 1;
     if (!(arg = (char *)malloc(sizeof(char) * len)))
@@ -162,7 +162,7 @@ int ft_printf(const char *format, ...)
         }
         else
         {
-            if (conversion(holder->head_ref->arg) == 'c')
+            if (conversion(holder->head_ref->arg, &v , &fill_structure) == 'c')
                 ret += conv_c(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 's')
                 ret += conv_s(holder->head_ref->arg, args);
@@ -180,8 +180,11 @@ int ft_printf(const char *format, ...)
                 ret += conv_x(holder->head_ref->arg, args);
             else if (conversion(holder->head_ref->arg) == 'X')
                 ret += conv_X(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'f')
+                 ret += conv_f(holder->head_ref->arg, args);
+            else if (conversion(holder->head_ref->arg) == 'b')
+                 ret += conv_b(holder->head_ref->arg, args);
         }
-        //printf("f_flag ==> %d\n arg ===> %s\n", holder->head_ref->f_flag, holder->head_ref->arg);
         holder->head_ref = holder->head_ref->next;
     }
     va_end(args);

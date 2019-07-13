@@ -1,9 +1,5 @@
 #include "ft_printf.h"
 
-// int casting_helper()
-// {
-
-// }
 
 void casting(t_var v, long long int *n, va_list args)
 {
@@ -39,15 +35,13 @@ int     conv_o(char *s, va_list args)
     v = fill_structure(s, 'o');
     casting(v, &n, args);
     n = (unsigned long long int)n;
-    str = octal(n);
+    str = ft_llitoa_base(n, 8, 0);
     n = (n < 0) ? n * -1 : n;
     len = 0;
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
-          //  printf("before str ==>%s\n", str);
         str = apply_flags(v, str, s, n);
-        // printf("after str ==>%s\n", str);
     }
     else if (v.width != -1 && v.pres == -1)
     {
@@ -75,7 +69,7 @@ int     conv_d(char *s, va_list args)
     v = fill_structure(s, 'i');
     casting(v, &n, args);
     nbr = (n < 0) ? n * -1 : n;
-    str = ft_llitoa(nbr);
+    str = ft_llitoa_base(nbr, 10, 0);
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
@@ -106,7 +100,7 @@ int     conv_i(char *s, va_list args)
     v = fill_structure(s, 'i');
     casting(v, &n, args);
     nbr = (n < 0) ? n * -1 : n;
-    str = ft_llitoa(nbr);
+    str = ft_llitoa_base(nbr, 10, 0);
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
@@ -136,7 +130,7 @@ int     conv_u(char *s, va_list args)
 
     v = fill_structure(s, 'u');
     casting(v, &n, args);
-    str = ft_llitoa(n);
+    str = ft_llitoa_base(n, 10, 0);
     n = (n < 0) ? n * -1 : n;
     if (v.width == -1 && v.pres != -1)
     {
@@ -167,7 +161,7 @@ int     conv_x(char *s, va_list args)
 
     v = fill_structure(s, 'x');
     casting(v, &n, args);
-    str = hex(n, 0);
+    str = ft_llitoa_base(n, 16, 0);
     n = (n < 0) ? n * -1 : n;
     if (v.width == -1 && v.pres != -1)
     {
@@ -197,7 +191,7 @@ int     conv_X(char *s, va_list args)
 
     v = fill_structure(s, 'X');
     casting(v, &n, args);
-    str = hex(n, 1);
+    str = ft_llitoa_base(n, 16, 1);
     n = (n < 0) ? n * -1 : n;
     if (v.width == -1 && v.pres != -1)
     {

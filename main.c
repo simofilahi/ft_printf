@@ -8,9 +8,9 @@ int main()
 
 
   
-    ret = ft_printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+    ret = ft_printf("%p ==>", &printf);
     printf("ret %d\n", ret);
-   ret = printf("%-#.5hho|%-0.5hho|%#0.5hho|%-#0.5hho", ULLONG_MAX, ULLONG_MAX, ULLONG_MAX, ULLONG_MAX);
+    ret = printf("%p ==>", &printf);
     printf("ret %d\n", ret);
     return 0;
 }

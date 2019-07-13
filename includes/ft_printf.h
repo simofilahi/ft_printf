@@ -43,6 +43,8 @@ int     conv_o(char *s, va_list args);
 int     conv_u(char *s, va_list args);
 int     conv_x(char *s, va_list args);
 int     conv_X(char *s, va_list args);
+int     conv_f(char *s, va_list args);
+int     conv_b(char *s, va_list args);
 /*
 ** handlers
 */
@@ -67,7 +69,7 @@ char    *get_length(char *s);
 char    *hex(unsigned long long int n, int flag);
 char    *octal(unsigned long long int n);
 void    print(int count, char c);
-char	*ft_llitoa(unsigned long long int n);
+char    *ft_llitoa_base(unsigned long long int n, int base, int flag);
 int     is_dot(char *s);
 // 
 void    debug(t_var v);

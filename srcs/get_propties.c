@@ -32,7 +32,7 @@ t_var fill_structure(char *s, char c)
 
 int  is_found(char c)
 {
-    char conv[10] = "cspdiouxX";
+    char conv[10] = "cspdiouxXf";
     int i;
 
     i = 0;
