@@ -1,33 +1,39 @@
 #include "ft_printf.h"
 
-t_var fill_structure(char *s, char c)
-{
-    t_var v;
 
-    v.pres = get_precision(s);
-    v.width = get_width(s);
-    v.f_flag = get_fflag(s);
-    v.s_flag = get_sflag(s);
-    v.f_flag = (v.width == v.f_flag - '0') ? -1 : v.f_flag;
-    v.s_flag = (v.width == v.s_flag - '0') ? -1 : v.s_flag;
-    if ((v.f_flag == '-' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == '-'))
+void init_structure(t_holder *var)
+{
+    var->n = 0;
+    var->len = 0;
+    var->str = NULL;
+    var->nbr = 0;
+}
+
+void fill_structure(char *s, t_properties **v, char c)
+{
+   
+    // (*v) = ft_memalloc(sizeof((*v));
+     (*v)->pres = get_precision(s);
+     (*v)->width = get_width(s);
+     (*v)->f_flag = get_fflag(s);
+     (*v)->s_flag = get_sflag(s);
+     (*v)->f_flag = ( (*v)->width ==  (*v)->f_flag - '0') ? -1 :  (*v)->f_flag;
+     (*v)->s_flag = ( (*v)->width ==  (*v)->s_flag - '0') ? -1 :  (*v)->s_flag;
+    if (( (*v)->f_flag == '-' &&  (*v)->s_flag == '0') ||\
+       ( (*v)->f_flag == '0' &&  (*v)->s_flag == '-'))
     {
-        v.f_flag = '-';
-        v.s_flag = -1;
+        ( (*v))->f_flag = '-';
+         (*v)->s_flag = -1;
     }
-    else if ((v.f_flag == ' ' && v.s_flag == '+') || (v.f_flag == '+' && v.s_flag == ' '))
+    else if (((*v)->f_flag == ' ' &&  (*v)->s_flag == '+') ||\
+            ((*v)->f_flag == '+' &&  (*v)->s_flag == ' '))
     {
-        v.f_flag = '+';
-        v.s_flag = -1;
+         (*v)->f_flag = '+';
+         (*v)->s_flag = -1;
     }
-  /*  else if ((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' '))
-    {
-        v.f_flag = '0';
-        v.s_flag = -1;
-    }*/
-    v.length = get_length(s);
-    v.type = c;
-    return (v);
+     (*v)->length = get_length(s);
+     (*v)->type = c;
+  //  return ( (*v));
 }
 
 int  is_found(char c)

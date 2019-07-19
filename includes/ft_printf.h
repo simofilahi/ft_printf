@@ -20,38 +20,54 @@ typedef struct s_info
      t_arg *tail_ref;
 }              t_info;
 
-typedef struct s_var
+typedef struct s_properties
 {
    int      pres;
    int      width;
    int      f_flag;
    int      s_flag;
-   int      t_flag;
-   int      fo_flag;
    char     *length;
    char     type;
-}              t_var;
+}              t_properties;
+
+typedef struct           s_holder
+{
+  int long long          n;
+  int                    len;
+  char                   *str;
+  unsigned long long int nbr;
+}                        t_holder;
+
+// typedef struct s_norm
+// {
+//    int      pres;
+//    int      width;
+//    int      f_flag;
+//    int      s_flag;
+//    char     *length;
+//    char     type;
+// }              t_norm;
 
 /*
 ** Conversion
 */
-int     conv_c(char *s, va_list args);
-int     conv_s(char *s, va_list args);
-int     conv_p(char *s, va_list args);
-int     conv_d(char *s, va_list args);
-int     conv_o(char *s, va_list args);
-int     conv_u(char *s, va_list args);
-int     conv_x(char *s, va_list args);
-int     conv_X(char *s, va_list args);
-int     conv_f(char *s, va_list args);
-int     conv_b(char *s, va_list args);
+int     conv_c(t_properties v, va_list args);
+int     conv_s(t_properties v, va_list args);
+int     conv_p(t_properties v, va_list args);
+int     conv_d(t_properties v, va_list args);
+int     conv_o(t_properties v, va_list args);
+int     conv_u(t_properties v, va_list args);
+int     conv_x(t_properties v, va_list args);
+int     conv_X(t_properties v, va_list args);
+int     conv_f(t_properties v, va_list args);
+int     conv_b(t_properties v, va_list args);
 /*
 ** handlers
 */
-char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int flag);
-char    *apply_pres(t_var v, char *s, int long long n, int sign);
-char    *apply_width(t_var v, char *s, int long long n, int flag);
-char    *apply_flags(t_var v, char *s, char *conv, int long long n);
+char    *apply_width_pres(t_properties v, char *str, int long long n, int flag);
+char    *apply_pres(t_properties v, char *s, int long long n, int sign);
+char    *apply_width(t_properties v, char *s, int long long n, int flag);
+char    *apply_flags(t_properties v, char *s, int long long n);
 /*
 ** get properties
 */
@@ -63,14 +79,15 @@ int     get_sflag(char *s);
 **
 */
 int     ft_printf(const char *format, ...);
-t_var   fill_structure(char *s, char c);
-char    conversion(char *s);
+void    fill_structure(char *s, t_properties **v, char c);
+int     conversion(char *s, t_properties *v, void (*f)(char *, t_properties **, char ), char c);
 char    *get_length(char *s);
 char    *hex(unsigned long long int n, int flag);
 char    *octal(unsigned long long int n);
 void    print(int count, char c);
 char    *ft_llitoa_base(unsigned long long int n, int base, int flag);
 int     is_dot(char *s);
+void    init_structure(t_holder *var);
 // 
-void    debug(t_var v);
+void    debug(t_properties v);
 #endif

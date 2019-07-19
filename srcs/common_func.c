@@ -16,7 +16,7 @@ void print(int count, char c)
         ft_putchar(c);
 }
 
-void debug(t_var v)
+void debug(t_properties v)
 {
     ft_putstr("v.pres ==> ");
     ft_putnbr(v.pres);
@@ -30,12 +30,15 @@ void debug(t_var v)
     ft_putstr("v.s_flag ==> ");
     ft_putchar(v.s_flag);
     ft_putchar('\n');
+    ft_putstr("v.type ==> ");
+    ft_putchar(v.type);
+    ft_putchar('\n');
     ft_putstr("v.v_length ==> ");
     ft_putchar('\n');
     ft_putendl(v.length);
 }
 
-char    *apply_width(t_var v, char *str, int long long n, int flag)
+char    *apply_width(t_properties v, char *str, int long long n, int flag)
 {
      char   *src;
      int    len;
@@ -60,7 +63,7 @@ char    *apply_width(t_var v, char *str, int long long n, int flag)
     return(str);
 }
 
-char    *apply_pres(t_var v, char *str, int long long n, int flag)
+char    *apply_pres(t_properties v, char *str, int long long n, int flag)
 {
     char    *src;
     int     len;
@@ -82,15 +85,13 @@ char    *apply_pres(t_var v, char *str, int long long n, int flag)
     return (str);
 }
 
-char    *apply_width_pres(t_var v, char *str, char *conv, int long long n, int flag)
+char    *apply_width_pres(t_properties v, char *str, int long long n, int flag)
 {
     int len;
 
     len = (int)ft_strlen(str);
     str = apply_pres(v, str, n, flag);
-   // printf("str two %s\n", str);
-    str = apply_flags(v, str, conv, n);
-   // printf("str two %s\n", str);
+    str = apply_flags(v, str, n);
     str = apply_width(v, str, n, flag);
     return(str);
 }

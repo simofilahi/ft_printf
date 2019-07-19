@@ -1,26 +1,27 @@
 #include "ft_printf.h"
 
-char    conversion(char *s)
+int    conversion(char *s, t_properties *v, void (*f)(char *, t_properties **, char ), char c)
 {
     int len;
 
     len  = (int)ft_strlen(s);
     while (--len >= 0)
     {
-        if (ft_isalpha(s[len]))
-            return (s[len]);
+        if (s[len] == c)
+        {
+            f(s, &v, c);
+            return (1);
+        }
     }
-    return ('0');
+    return (0);
 }
 
 
-int     conv_c(char *s, va_list args)
+int     conv_c(t_properties v, va_list args)
 {
-    t_var v;
     char c;
     int len;
 
-    v = fill_structure(s, 'c');
     c = va_arg(args, int);
     len = 1;
     if (v.f_flag == '-')
@@ -40,13 +41,11 @@ int     conv_c(char *s, va_list args)
     return ((v.width > len) ? v.width : len);
 }
 
-int     conv_s(char *s, va_list args)
+int     conv_s(t_properties v, va_list args)
 {
-    t_var v;
     char *string;
     int  len;
 
-    v = fill_structure(s, 's');
     string = va_arg(args, char *);
     if (string == NULL)
         string = ft_strdup("(null)");
@@ -56,41 +55,39 @@ int     conv_s(char *s, va_list args)
     else if (v.pres == -1 && v.width != -1)
         string = apply_width(v, string, 0, 1);
     else if (v.pres != -1 && v.width != -1)
-        string = apply_width_pres(v, string, string, 0, 0);
+        string = apply_width_pres(v, string, 0, 0);
     ft_putstr(string);
     len = (int)ft_strlen(string);
     return (len);
 }
 
-int     conv_p(char *s, va_list args)
+int     conv_p(t_properties v, va_list args)
 {
-     t_var v;
-     long  int   ret;
-     char *string;
-     char *tmp;
-     int   len;
+    long long int   ret;
+    char            *str;
+    char            *tmp;
+    int             len;
 
-    v = fill_structure(s, 'p');
-    ret = va_arg(args, long int );
-    string = ft_llitoa_base(ret, 16, 0);
-    tmp = string;
-    string = ft_strjoin("0x", string);
+    ret = va_arg(args, long long int);
+    str = ft_llitoa_base(ret, 16, 0);
+    tmp = str;
+    str = ft_strjoin("0x", str);
     ft_strdel(&tmp);
     if (v.width != -1)
-       string = apply_width(v, string, 0, 0);
-    ft_putstr(string);
-    len = (int)ft_strlen(string);
-    ft_strdel(&string);
+       str = apply_width(v, str, 0, 0);
+    ft_putstr(str);
+    len = (int)ft_strlen(str);
+    ft_strdel(&str);
     return (len);
 }
 
-char    *float_to_str(t_var v, double n)
+char    *float_to_str(t_properties v, double n)
 {
     int long long f;
-int long long h;
+    int long long h;
     f = (unsigned long long int)n;
     printf("f ==> %lld\n", f);
-    //*str = ft_llitoa_base(())
+  //  str = ft_llitoa_base(())
     printf("n ===> before %f\n", n);
     int i;
 
@@ -103,7 +100,7 @@ int long long h;
         // {
               if (i == 0)
                 f = ft_nbrlen(n);
-            n *= 10;
+            n *= -10;
             // if (i == 5)
             //     n += 1;
         // }
@@ -144,50 +141,45 @@ int long long h;
     return (str);
 }
 
-int     conv_f(char *s, va_list args)
+int     conv_f(t_properties v, va_list args)
 {
-     t_var                  v;
-    double         n;
+    double                   n;
     int                    len;
     char                   *str;
 
-    v = fill_structure(s, 'f');
-    //casting(v, &n, args);
     n = va_arg(args, double);
     str = float_to_str(v, n);
-    //str = hex(n, 1);
     n = (n < 0) ? n * -1 : n;
     if (v.width == -1 && v.pres != -1)
     {
         str = apply_pres(v, str, n,0);
-        str = apply_flags(v, str, s, n);
+        str = apply_flags(v, str, n);
     }
     else if (v.width != -1 && v.pres == -1)
     {
-        str = apply_flags(v, str, s, n);
+        str = apply_flags(v, str, n);
         str = apply_width(v, str, n, 0);
     }
     else if (v.width != -1 && v.pres != -1)
-        str = apply_width_pres(v, str, s, n, 0);
+        str = apply_width_pres(v, str, n, 0);
     else
-        str = apply_flags(v, str, s, n);
+        str = apply_flags(v, str, n);
     ft_putstr(str);
     len = (int)ft_strlen(str);
     return (len);
 }
 
-int conv_b(char *s, va_list args)
+int conv_b(t_properties v, va_list args)
 {
-     t_var           v;
-     long long int   ret;
-     char            *string;
-     char            *tmp;
+     long long int   n;
+     char            *str;
      int             len;
 
-    v = fill_structure(s, 'b');
-    ret = va_arg(args, long int);
-    string = ft_llitoa_base(ret, 2, 0);
-    ft_putstr(string);
-    len = (int)ft_strlen(string);
+    (void)v;
+    n = va_arg(args, long int);
+    str = ft_llitoa_base(n, 2, 0);
+    ft_putstr(str);
+    ft_strdel(&str);
+    len = (int)ft_strlen(str);
     return (len);
 }

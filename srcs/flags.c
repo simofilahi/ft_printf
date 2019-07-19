@@ -1,6 +1,6 @@
 #include "ft_printf.h"
 
-char    *apply_flag_space(t_var v, char *str)
+char    *apply_flag_space(t_properties v, char *str)
 {
     char *src;
     int   len;
@@ -18,7 +18,7 @@ char    *apply_flag_space(t_var v, char *str)
     return (str);
 }
 
-char    *apply_flag_zero(t_var v, char *str, int len, int long long n)
+char    *apply_flag_zero(t_properties v, char *str, int len, int long long n)
 {
     char *src;
 
@@ -29,13 +29,12 @@ char    *apply_flag_zero(t_var v, char *str, int len, int long long n)
         ft_memset(src, '0', v.width - len);
         str = ft_strjoin(src, str);
     }
-    //
-    if (v.f_flag == '+' && v.type == 'i' && n >= 0)
+    if (v.f_flag == '+' && (v.type == 'i' || v.type == 'd') && n >= 0)
         str = ft_strjoin("+", str);
     return (str);
 }
 
-char    *apply_flag_hash(t_var v, char *str, int len, int long long n)
+char    *apply_flag_hash(t_properties v, char *str, int len, int long long n)
 {
     char *src;
     char *tmp;
@@ -69,12 +68,11 @@ char    *apply_flag_hash(t_var v, char *str, int len, int long long n)
     return (str);
 }
 
-char    *apply_flags(t_var v, char *str, char *conv, int long long n)
+char    *apply_flags(t_properties v, char *str, int long long n)
 {
     int len;
     int flag = 0;
 
-    (void)conv;
     if (v.type == 'd')
     {
         if ((n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
@@ -106,7 +104,9 @@ char    *apply_flags(t_var v, char *str, char *conv, int long long n)
         len = (int)ft_strlen(str);
     if (v.f_flag == '+' || v.s_flag == '+')
         len += 1;
-    if ((v.f_flag == '+' || v.s_flag == '+') && v.type == 'i' && n >= 0 && v.s_flag != '0')
+    if ((v.f_flag == '+' || v.s_flag == '+') &&\
+       (v.type == 'i' || v.type == 'd') &&\
+        n >= 0 && v.s_flag != '0')
         str = ft_strjoin("+", str);
     else if (((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' ')) && (v.type != 's'))
     {

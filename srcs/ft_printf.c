@@ -141,6 +141,7 @@ int ft_printf(const char *format, ...)
     va_list args;
     va_start(args, format);
     t_info  *holder;
+    t_properties   v;
 
     char *tmp = ft_strdup(format);
     holder = parsing(tmp);
@@ -162,28 +163,28 @@ int ft_printf(const char *format, ...)
         }
         else
         {
-            if (conversion(holder->head_ref->arg, &v , &fill_structure) == 'c')
-                ret += conv_c(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 's')
-                ret += conv_s(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'p')
-                ret += conv_p(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'd')
-                ret += conv_d(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'i')
-                ret += conv_d(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'o')
-                ret += conv_o(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'u')
-                ret += conv_u(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'x')
-                ret += conv_x(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'X')
-                ret += conv_X(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'f')
-                 ret += conv_f(holder->head_ref->arg, args);
-            else if (conversion(holder->head_ref->arg) == 'b')
-                 ret += conv_b(holder->head_ref->arg, args);
+            if (conversion(holder->head_ref->arg, &v, &fill_structure, 'c'))
+                ret += conv_c(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 's'))
+                ret += conv_s(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'p'))
+                ret += conv_p(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'd'))
+                ret += conv_d(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'i'))
+                ret += conv_d(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'o'))
+                ret += conv_o(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'u'))
+                ret += conv_u(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'x'))
+                ret += conv_x(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'X'))
+                ret += conv_X(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'f'))
+                 ret += conv_f(v, args);
+            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'b'))
+                 ret += conv_b(v, args);
         }
         holder->head_ref = holder->head_ref->next;
     }
