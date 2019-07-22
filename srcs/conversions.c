@@ -64,6 +64,7 @@ int     conv_d(t_properties v, va_list args)
 
     init_structure(&var);
     casting(v, &var.n, args);
+    var.nbr = (var.n < 0) ? var.n * -1 : var.n;
     var.str = ft_llitoa_base(var.nbr, 10, 0);
     if (v.width == -1 && v.pres != -1)
     {

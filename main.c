@@ -6,9 +6,9 @@ int main()
 {
     int ret;
 
-    ret = ft_printf("% d\n", 1);
+    ret = ft_printf("%.20f\n", 3.505);
     printf("ret %d\n", ret);
-    ret = printf("% d\n", 1);
+    ret = printf("%.20f\n", 3.505);
     printf("ret %d\n", ret);
     return 0;
 }

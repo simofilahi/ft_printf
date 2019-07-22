@@ -38,6 +38,18 @@ typedef struct           s_holder
   unsigned long long int nbr;
 }                        t_holder;
 
+typedef struct           s_floatdata
+{
+  int sign : 1;
+  int expo : 8;
+  int mantisa : 23;
+}                        t_floatdata;
+
+typedef union u_data{
+  float nbr;
+  t_floatdata data;
+}     n_data;
+
 // typedef struct s_norm
 // {
 //    int      pres;
@@ -55,6 +67,7 @@ int     conv_c(t_properties v, va_list args);
 int     conv_s(t_properties v, va_list args);
 int     conv_p(t_properties v, va_list args);
 int     conv_d(t_properties v, va_list args);
+int     conv_i(t_properties v, va_list args);
 int     conv_o(t_properties v, va_list args);
 int     conv_u(t_properties v, va_list args);
 int     conv_x(t_properties v, va_list args);

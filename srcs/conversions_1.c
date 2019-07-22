@@ -143,30 +143,36 @@ char    *float_to_str(t_properties v, double n)
 
 int     conv_f(t_properties v, va_list args)
 {
-    double                   n;
-    int                    len;
-    char                   *str;
+    // double                   n;
+    // int                    len;
+    // char                   *str;
+    (void)v;
+    n_data var;
 
-    n = va_arg(args, double);
-    str = float_to_str(v, n);
-    n = (n < 0) ? n * -1 : n;
-    if (v.width == -1 && v.pres != -1)
-    {
-        str = apply_pres(v, str, n,0);
-        str = apply_flags(v, str, n);
-    }
-    else if (v.width != -1 && v.pres == -1)
-    {
-        str = apply_flags(v, str, n);
-        str = apply_width(v, str, n, 0);
-    }
-    else if (v.width != -1 && v.pres != -1)
-        str = apply_width_pres(v, str, n, 0);
-    else
-        str = apply_flags(v, str, n);
-    ft_putstr(str);
-    len = (int)ft_strlen(str);
-    return (len);
+    var.nbr = va_arg(args, double);
+    printf("var.nbr ==> %f\n", var.nbr);
+    printf("sign ==> %d\n", var.data.sign);
+    printf("expo ==> %d\n", var.data.expo);
+    printf("mantissa ==> %d\n", var.data.mantisa);
+   // str = float_to_str(v, n);
+    // n = (n < 0) ? n * -1 : n;
+    // if (v.width == -1 && v.pres != -1)
+    // {
+    //     str = apply_pres(v, str, n,0);
+    //     str = apply_flags(v, str, n);
+    // }
+    // else if (v.width != -1 && v.pres == -1)
+    // {
+    //     str = apply_flags(v, str, n);
+    //     str = apply_width(v, str, n, 0);
+    // }
+    // else if (v.width != -1 && v.pres != -1)
+    //     str = apply_width_pres(v, str, n, 0);
+    // else
+    //     str = apply_flags(v, str, n);
+    // ft_putstr(str);
+    // len = (int)ft_strlen(str);
+    return (0);
 }
 
 int conv_b(t_properties v, va_list args)
