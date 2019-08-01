@@ -9,16 +9,27 @@ void init_structure(t_holder *var)
     var->nbr = 0;
 }
 
+int  find_base(char conv_type)
+{
+    if (conv_type == 'b')
+        return (2);
+    else if (conv_type == 'o')
+        return (8);
+    else if (conv_type == 'd' || conv_type == 'i' || conv_type == 'u')
+        return (10);
+    else if (conv_type == 'x' || conv_type == 'X' || conv_type == 'p')
+         return (16);
+    return (0);
+}
+
 void fill_structure(char *s, t_properties **v, char c)
 {
-   
-    // (*v) = ft_memalloc(sizeof((*v));
      (*v)->pres = get_precision(s);
      (*v)->width = get_width(s);
      (*v)->f_flag = get_fflag(s);
      (*v)->s_flag = get_sflag(s);
-     (*v)->f_flag = ( (*v)->width ==  (*v)->f_flag - '0') ? -1 :  (*v)->f_flag;
-     (*v)->s_flag = ( (*v)->width ==  (*v)->s_flag - '0') ? -1 :  (*v)->s_flag;
+     (*v)->f_flag = ( (*v)->width ==  (*v)->f_flag - '0') ? -1 : (*v)->f_flag;
+     (*v)->s_flag = ( (*v)->width ==  (*v)->s_flag - '0') ? -1 : (*v)->s_flag;
     if (( (*v)->f_flag == '-' &&  (*v)->s_flag == '0') ||\
        ( (*v)->f_flag == '0' &&  (*v)->s_flag == '-'))
     {
@@ -33,7 +44,7 @@ void fill_structure(char *s, t_properties **v, char c)
     }
      (*v)->length = get_length(s);
      (*v)->type = c;
-  //  return ( (*v));
+     (*v)->base = find_base((*v)->type);
 }
 
 int  is_found(char c)

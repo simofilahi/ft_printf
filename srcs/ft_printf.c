@@ -1,15 +1,16 @@
 #include "ft_printf.h"
 
-int     ft_cmp(char c, const char *ptr)
+int     ft_cmp(char c, const char *p)
 {
-    while (*ptr)
-        if (c == *ptr++)
+    while (*p)
+        if (c == *p++)
             return (1);
     return (0);
 }
 
-int     arg_len(const char *s, const char *ptr)
+int     arg_len(const char *s)
 {
+    char conv[10] = "cspdiouxX";
     int  counter;
     
     counter = 0;
@@ -24,7 +25,7 @@ int     arg_len(const char *s, const char *ptr)
     }
     else if (*s == '%' && *(s + 1) != '%')
     {
-         while (*s && !ft_cmp(*s, (ptr + 0)))
+         while (*s && !ft_cmp(*s, &conv[0]))
          {
             counter++;
             s++;
@@ -69,167 +70,121 @@ void    create_list(t_arg **head_ref, t_arg **tail_ref, char *s, int flag)
     }
 }
 
-// void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
-// {
-//     char    *arg;
-//     int     len;
-//     int     i;
-//     int     flag;
-//     const char conv[10] = "cspdiouxXf";
-
-//     len = arg_len((*s)) + 1;
-//     if (!(arg = (char *)malloc(sizeof(char) * len)))
-//         return ;
-//     i = 0;
-//     flag = 0;
-//     if (*(*s) != '%')
-//     {
-//         while (*(*s) && *(*s) != '%')
-//         {
-
-//             arg[i++] = *(*s);
-//             (*s)++;
-//         }
-//         (*s)--;
-//     }
-//     else if (*(*s) == '%' && *(*s + 1) != '%')
-//     {
-//          while (*(*s) && !ft_cmp(*(*s), &conv[0]))
-//          {
-//             arg[i++] = *(*s);
-//             (*s)++;
-//          }
-//          arg[i++] = *(*s);
-//          flag = 1;
-//     }
-//     else
-//     {
-//         while (*(*s) && *(*s) == '%' &&\
-//          ((*(*s + 1) == '%') ||\
-//            ft_isspace((*(*s + 1)))))
-//         {
-//             arg[i++] = *(*s);
-//             (*s)++;
-//         }
-//         arg[i++] = *(*s);
-//         (*s)--;
-//         flag = -1;
-//     }
-//     arg[i] = '\0';
-//     create_list(head_ref, tail_ref, arg, flag);
-//     ft_strdel(&arg);
-// }
-
-t_info    *parsing(const char *s, const char *conv)
+void    split(char **s, t_arg **head_ref, t_arg **tail_ref)
 {
-    t_info  *ret;
     char    *arg;
     int     len;
     int     i;
     int     flag;
+    const char conv[10] = "cspdiouxX";
+
+    len = arg_len((*s)) + 1;
+    if (!(arg = (char *)malloc(sizeof(char) * len)))
+        return ;
+    i = 0;
+    flag = 0;
+    if (*(*s) != '%')
+    {
+        while (*(*s) && *(*s) != '%')
+        {
+
+            arg[i++] = *(*s);
+            (*s)++;
+        }
+        (*s)--;
+    }
+    else if (*(*s) == '%' && *(*s + 1) != '%')
+    {
+         while (*(*s) && !ft_cmp(*(*s), &conv[0]))
+         {
+            arg[i++] = *(*s);
+            (*s)++;
+         }
+         arg[i++] = *(*s);
+         flag = 1;
+    }
+    else
+    {
+        while (*(*s) && *(*s) == '%' &&\
+         ((*(*s + 1) == '%') ||\
+           ft_isspace((*(*s + 1)))))
+        {
+            arg[i++] = *(*s);
+            (*s)++;
+        }
+        arg[i++] = *(*s);
+        (*s)--;
+        flag = -1;
+    }
+    arg[i] = '\0';
+    create_list(head_ref, tail_ref, arg, flag);
+    ft_strdel(&arg);
+}
+
+t_arg    *parsing(char *s)
+{
+    t_info *ret;
 
     ret = ft_memalloc(sizeof(t_info));
     while (*s)
     {
-        len = arg_len(s, conv);
-        if (!(arg = ft_strnew(len)))
-            return (NULL);
-        i = 0;
-        flag = 0;
-        if (*s != '%')
-        {
-            while (*s && *s != '%')
-            {
-                arg[i++] = *s;
-                s++;
-            }
-            s--;
-        }
-        else if (*s == '%' && *(s + 1) != '%')
-        {
-            while (*s && !ft_cmp(*s, (conv + 0)))
-            {
-                arg[i++] = *s;
-                s++;
-            }
-            arg[i++] = *s;
-            flag = 1;
-        }
-        else
-        {
-            while ((*s && *s == '%') &&\
-                  (*(s + 1) == '%' ||\
-                  ft_isspace((*(s + 1)))))
-            {
-                arg[i++] = *s;
-                s++;
-            }
-            arg[i++] = *s;
-            s--;
-            flag = -1;
-        }
-        arg[i] = '\0';
-        create_list(&ret->head_ref, &ret->tail_ref, arg, flag);
-        ft_strdel(&arg);
+        split(&s, &ret->head_ref, &ret->tail_ref);
         if (!*s)
             break ;
         s++;
     }
-    return (ret);
+    return (ret->head_ref);
 }
 
 int ft_printf(const char *format, ...)
 {
     va_list args;
     va_start(args, format);
-    t_info  *holder;
+    t_arg *head_ref;
     t_properties   v;
 
-    //char *tmp = ft_strdup(format);
-    holder = parsing(format, "cspdiouxXf");
+    
+    char *tmp = ft_strdup(format);
+    head_ref = parsing(tmp);
+
     int ret = 0;
     int i;
     i = 0;
     (void)v;
-    while (holder->head_ref)
-    {
-      if (!holder->head_ref->flag)
+    fd = open("/dev/ttys000", O_WRONLY);
+    while (head_ref)
+    {     
+        if (!head_ref->flag)
         {
-            ft_putstr_fd(holder->head_ref->arg, 1);
-            ret += ft_strlen(holder->head_ref->arg);
+            ft_putstr_fd(head_ref->arg, 1);
+            ret += ft_strlen(head_ref->arg);
         }
-        else if (holder->head_ref->flag == -1)
+        else if (head_ref->flag)
         {
-            ret += ft_strlen(holder->head_ref->arg) / 2;
-            print((int)ft_strlen(holder->head_ref->arg) / 2, '%');
-        }
-        else
-        {
-            if (conversion(holder->head_ref->arg, &v, &fill_structure, 'c'))
+            if (conv_type(head_ref->arg, &v, &fill_structure, "c"))
                 ret += conv_c(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 's'))
+            else if (conv_type(head_ref->arg, &v, &fill_structure, "s"))
                 ret += conv_s(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'p'))
+            else if (conv_type(head_ref->arg, &v, &fill_structure, "p"))
                 ret += conv_p(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'd'))
-                ret += conv_d(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'i'))
-                ret += conv_i(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'o'))
-                ret += conv_o(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'u'))
-                ret += conv_u(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'x'))
-                ret += conv_x(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'X'))
-                ret += conv_X(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'f'))
-                 ret += conv_f(v, args);
-            else if (conversion(holder->head_ref->arg, &v, &fill_structure, 'b'))
+            else if (conv_type(head_ref->arg, &v, &fill_structure, "f"))
+            {
+                
+                ret += conv_f(v, args);
+            }
+            else if (conv_type(head_ref->arg, &v, &fill_structure, "b"))
                  ret += conv_b(v, args);
+            if (conv_type(head_ref->arg, &v, &fill_structure, "%"))
+                 ret += conv_percent(head_ref->arg ,v);
+            else if (conv_type(head_ref->arg, &v, &fill_structure, "diouxX"))
+                ret += conv_diouxX(v, args);
         }
-       // ft_putendl(holder->head_ref->arg);
-        holder->head_ref = holder->head_ref->next;
+        // ft_putstr("here arg ==>");
+        // ft_putendl(head_ref->arg);
+        // ft_putstr("flag ==>");
+        // ft_putnbr(head_ref->flag);
+        // ft_putendl("");
+         head_ref = head_ref->next;
     }
     va_end(args);
     return (ret);
