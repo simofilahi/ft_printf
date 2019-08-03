@@ -43,13 +43,13 @@ typedef struct           s_holder
 
 typedef struct           s_floatdata
 {
-  unsigned mantisa : 23;
-  unsigned int expo : 8;
+  unsigned long int mantisa : 63;
+  unsigned int expo : 15;
   int sign : 1;
 }                        t_floatdata;
 
 typedef union u_data{
-  float nbr;
+  long double nbr;
   t_floatdata data;
 }     n_data;
 

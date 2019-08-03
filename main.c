@@ -9,7 +9,7 @@ int main()
     int ret;
 
     
-    ret = ft_printf("%f", 0.4);
+    ret = ft_printf("%f", 0.10);
     //  printf("ret %d\n", ret);
     // ret = printf("%f", 120.22);
     // printf("ret %d\n", ret);
