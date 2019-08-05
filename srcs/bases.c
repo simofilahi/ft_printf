@@ -1,13 +1,15 @@
 #include "ft_printf.h"
 
+
+
 char			*ft_llitoa_base(unsigned long long int n, t_properties v)
 {
 	char                *s;
-	long long int 		len;
+	int 		        len;
     int                 i;
 
-	len = ft_nbrlen(n);
-	if (!(s = (char *)malloc(sizeof(char) * (len + 1))))
+	len = (v.base == 2) ? ft_nbrlen(n, 1) : ft_nbrlen(n, 0);
+	if (!(s = ft_strnew(len)))
 		return (NULL);
     i = 0;
 	while (1)

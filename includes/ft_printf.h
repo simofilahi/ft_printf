@@ -41,18 +41,25 @@ typedef struct           s_holder
   long long int          nbr;
 }                        t_holder;
 
-typedef struct           s_floatdata
+// typedef struct           s_double
+// {
+//   unsigned long mantisa : 53;
+//   unsigned long expo : 11;
+//   unsigned long sign : 1;
+// }                        t_double;
+
+typedef struct           s_longdouble
 {
-  unsigned long int mantisa : 63;
-  unsigned int expo : 15;
-  int sign : 1;
-}                        t_floatdata;
+ unsigned  long int mantisa : 63;
+  unsigned long int d : 1;
+  unsigned long int expo : 15;
+ unsigned  long int sign : 1;
+}                       t_longdouble;
 
 typedef union u_data{
   long double nbr;
-  t_floatdata data;
+  t_longdouble doublevar;
 }     n_data;
-
 // typedef struct s_norm
 // {
 //    int      pres;

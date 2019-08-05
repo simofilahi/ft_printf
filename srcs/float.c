@@ -11,9 +11,9 @@ char  *multi(char *n1, char *n2)
 	int nbr;
 	int k;
 
-	if (!(result = (char *)malloc(sizeof(char) * 1000000)))
+	if (!(result = (char *)malloc(sizeof(char) * 10000)))
 		return (NULL);
-	ft_bzero(result, 1000000);
+	ft_bzero(result, 10000);
 	n1_len = ft_strlen(n1) - 1;
 	n2_len = ft_strlen(n2) - 1;
 	k = 0;
@@ -61,9 +61,9 @@ char *add(char *n1, char *n2)
         swap(&n1, &n2);
     len_n1 = strlen(n1) - 1;
     len_n2 = strlen(n2) - 1; 
-    if (!(add = ft_strnew(1000000)))
+    if (!(add = ft_strnew(10000)))
         return (NULL);
-    ft_bzero(add, 1000000);
+    ft_bzero(add, 10000);
     index = 0;
     carry = 0;
     int sum = 0;
@@ -141,31 +141,28 @@ char *multiplication(int j, t_properties v)
     int f;
 
     k = j;
-    v.base = 10;
+    (void)v;
     n1 = ft_strdup("10");
-    tmp = ft_strdup("10");
-   
     while (k > 1)
     {
-        n1 = multi(n1, tmp);
+        tmp = n1;
+        n1 = multi(n1, "10");
+        ft_strdel(&tmp);
         k--;
     }
     k = j;
     n2 = ft_strdup("5");
-    tmp = ft_strdup("5");
     while (k > 1)
     {
-        char *ptr;
-        ptr = n2;
-        n2 = multi(n2, tmp);
-        ft_strdel(&ptr);
-
+        tmp = n2;
+        n2 = multi(n2, "5");
+        ft_strdel(&tmp);
         k--;
     }
-     ret = ft_strjoin(n1, n2);
-     f = move_point(ret, j);
-     ret = delete_range_before_point(ret);
-     return (ret);
+    ret = ft_strjoin(n1, n2);
+    f = move_point(ret, j);
+    ret = delete_range_before_point(ret);
+    return (ret);
 }
 
 char *ConvertMantisatoDecimal(char *arr, t_properties v, int *index)
@@ -191,8 +188,6 @@ char *ConvertMantisatoDecimal(char *arr, t_properties v, int *index)
         k++;
         i++;
     }
-    ft_putstr("count ==>");
-    ft_putnbr(i);
     tab = ft_strsplit(result, '+');
     result = add(tab[0], tab[1]);
     i = 2;
@@ -201,18 +196,6 @@ char *ConvertMantisatoDecimal(char *arr, t_properties v, int *index)
    return (result);
 }
 
-// void move_point_2(char *str, int index)
-// {
-//     int len;
-
-//     len = ft_strlen(str) - 1;
-//     while (len >= 0 && str[len] == '0')
-//         len--;
-//     while (len >= 0)
-//     {
-        
-//     }
-// }
 
 char     *expo_calc(n_data var)
 {
@@ -222,7 +205,7 @@ char     *expo_calc(n_data var)
     int  flag;
 
     tmp = NULL;
-    expo = var.data.expo - 127;
+    expo = var.doublevar.expo - 16383;
     flag = 0;
     if (expo < 0)
     {
@@ -302,28 +285,21 @@ char    *float_calc(t_properties v, va_list args)
     char    *bin_mant;
 //    char    *new_bin_mant;
     char    *expo;
-    char    *decimal_mant;
+     char    *decimal_mant;
     char    *final_result;
     int     index;
 
     v.base = 2;
     index = 0;
     var.nbr = va_arg(args, double);
-    bin_mant = ft_llitoa_base(var.data.mantisa, v);
-    if (v.type == 'f')
-        bin_mant = ft_strsub(bin_mant, 0, 23);
-    ft_putstr("bin_mant ==>");
-    ft_putendl(bin_mant);
-    // new_bin_mant = copy_mantissa(bin_mant);
-    // ft_putstr("new_bin_mant ==>");
-    // ft_putendl(new_bin_mant);
+    
+   
+    bin_mant = ft_llitoa_base(var.doublevar.mantisa, v);
     expo = expo_calc(var);
     decimal_mant = ConvertMantisatoDecimal(bin_mant, v, &index);
-    ft_putendl("hello");
-    if (expo[0] != '0')
-        decimal_mant = ft_strjoin("1", decimal_mant);
+    decimal_mant = ft_strjoin("1", decimal_mant);
     final_result = multi(expo, decimal_mant);
-    index = (var.data.expo - 127 < 0) ? index + ((var.data.expo - 127) * -1) : 0;
+    index = (var.doublevar.expo - 16383 < 0) ? index + ((var.doublevar.expo - 16383) * -1) : index;
     final_result = move_point_2(final_result, index);
     ft_putstr("final_result ==>");
     ft_putendl(final_result);

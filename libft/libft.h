@@ -87,6 +87,6 @@ int				ft_isxdigit(int c);
 int				ft_isblank(int c);
 char			*ft_trim(char *str, char delim);
 void			ft_free2d(char **p);
-long long int   ft_nbrlen(unsigned long long int n);
+int				ft_nbrlen(long long int n, int flag);
 void			ft_strrev(char *s);
 #endif

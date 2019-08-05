@@ -1,14 +1,18 @@
 #include "libft.h"
+//
+#include <stdio.h>
 
-long long int ft_nbrlen(unsigned long long int n)
+int ft_nbrlen(long long int n, int flag)
 {
-    long long int 	len;
+    int 	len;
 
 
 	len = (n > 0) ? 0 : 1;
-	while (n != 0)
+	while (1)
 	{
-		n = n / 10;
+		n /= (flag == 1) ? 2 : 10;
+		if (n <= 0)
+			break ;
 		len++;
 	}
 	return (len);

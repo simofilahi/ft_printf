@@ -7,11 +7,11 @@
 int main()
 {
     int ret;
-
+    double f = 100.15;
     
-    ret = ft_printf("%f", 0.10);
+    ret = ft_printf("%f", f);
     //  printf("ret %d\n", ret);
-    // ret = printf("%f", 120.22);
+    // ret = printf("%.45f", f);
     // printf("ret %d\n", ret);
     return 0;  
 }
@@ -19,8 +19,9 @@ int main()
 //(  2 147 483 649  )
 //(  
     
-    
-    
+  
+// 1100100001001100110011001100110011001100110011001101
+// 110010000100110011001100110011001
       
       
     //   5 000 000 000  )
