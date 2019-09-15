@@ -50,10 +50,10 @@ typedef struct           s_holder
 
 typedef struct           s_longdouble
 {
- unsigned  long int mantisa : 63;
+  unsigned  long int mantisa : 63;
   unsigned long int d : 1;
   unsigned long int expo : 15;
- unsigned  long int sign : 1;
+  unsigned  long int sign : 1;
 }                       t_longdouble;
 
 typedef union u_data{
@@ -112,6 +112,14 @@ char    *ft_llitoa_base(unsigned long long int n, t_properties v);
 int     is_dot(char *s);
 void    init_structure(t_holder *var);
 t_arg    *parsing(char *s);
-// 
+/*
+** FLOAT OPERATION;
+*/
+char  *multi(char *n1, char *n2);
+char  *add(char *n1, char *n2);
+char  *multiplication(int j, t_properties v);
+int    move_point(char *arr, int index);
+char   *delete_range_before_point(char *str);
+char *multiplication(int j, t_properties v);
 void    debug(t_properties v);
 #endif

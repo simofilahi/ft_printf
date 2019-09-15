@@ -7,12 +7,12 @@
 int main()
 {
     int ret;
-    double f = 100.15;
+    double f = 0;
     
-    ret = ft_printf("%f", f);
-    //  printf("ret %d\n", ret);
-    // ret = printf("%.45f", f);
-    // printf("ret %d\n", ret);
+    ret = ft_printf("%f|%-f|%+f|% f|%#f|%0f", 0., 0., 0., 0., 0., 0.);
+     printf("ret %d\n", ret);
+    ret = printf("%f|%-f|%+f|% f|%#f|%0f", 0., 0., 0., 0., 0., 0.);
+    printf("ret %d\n", ret);
     return 0;  
 }
 

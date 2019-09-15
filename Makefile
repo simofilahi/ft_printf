@@ -21,13 +21,14 @@ CC = gcc
 C_FLAG = -Wextra -Werror -Wall
 
 SRCS = $(SRCS_DIR)/ft_printf.c \
-	   $(SRCS_DIR)/conversions.c \
-	   $(SRCS_DIR)/conversions_1.c \
+	   $(SRCS_DIR)/diouxX_conv.c \
+	   $(SRCS_DIR)/cspb_conv.c \
 	   $(SRCS_DIR)/bases.c \
 	   $(SRCS_DIR)/common_func.c \
 	   $(SRCS_DIR)/flags.c \
 	   $(SRCS_DIR)/float.c \
-	   $(SRCS_DIR)/get_propties.c 
+	   $(SRCS_DIR)/add_multi.c \
+	   $(SRCS_DIR)/get_propties.c
 
 OBJECTS = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS:.c=.o)))
 

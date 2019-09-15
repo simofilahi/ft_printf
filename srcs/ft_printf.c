@@ -169,7 +169,7 @@ int ft_printf(const char *format, ...)
                 ret += conv_p(v, args);
             else if (conv_type(head_ref->arg, &v, &fill_structure, "f"))
             {
-                
+                printf("here\n");
                 ret += conv_f(v, args);
             }
             else if (conv_type(head_ref->arg, &v, &fill_structure, "b"))
@@ -179,11 +179,11 @@ int ft_printf(const char *format, ...)
             else if (conv_type(head_ref->arg, &v, &fill_structure, "diouxX"))
                 ret += conv_diouxX(v, args);
         }
-        // ft_putstr("here arg ==>");
-        // ft_putendl(head_ref->arg);
-        // ft_putstr("flag ==>");
-        // ft_putnbr(head_ref->flag);
-        // ft_putendl("");
+        ft_putstr("here arg ==>");
+        ft_putendl(head_ref->arg);
+        ft_putstr("flag ==>");
+        ft_putnbr(head_ref->flag);
+        ft_putendl("");
          head_ref = head_ref->next;
     }
     va_end(args);
