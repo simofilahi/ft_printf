@@ -65,6 +65,10 @@ char    *apply_flag_hash(t_properties v, char *str, int len, int long long n)
         else if (v.type == 'X')
             str = ft_strjoin("0X", str);
     }
+    else if (v.type == 'f' &&\
+            (v.f_flag == '#' && v.pres == 0 &&\
+            (ft_strcmp(str, "inf") != 0 && ft_strcmp(str, "-inf") != 0)))
+        str = ft_strjoin(str, ".");
     return (str);
 }
 
@@ -80,6 +84,7 @@ char    *apply_flags(t_properties v, char *str, int long long n)
             (n < 0 && ((v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres != -1)))
         )
         {
+            // ft_putendl("hello");
             flag = 1;
             str = ft_strjoin("-", str);
         } 
@@ -105,21 +110,26 @@ char    *apply_flags(t_properties v, char *str, int long long n)
     if (v.f_flag == '+' || v.s_flag == '+')
         len += 1;
     if ((v.f_flag == '+' || v.s_flag == '+') &&\
-       (v.type == 'i' || v.type == 'd') &&\
-        n >= 0 && v.s_flag != '0')
+       (v.type == 'i' || v.type == 'd' || v.type == 'f') &&\
+        n >= 0 && v.s_flag != '0' && str[0] != '-')
         str = ft_strjoin("+", str);
     else if (((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' ')) && (v.type != 's'))
     {
         str = apply_flag_zero(v, str, len + 1, n);
         str = apply_flag_space(v, str);
     }
-    else if ((v.f_flag == ' ' || v.s_flag == ' ') && v.type != 's')
+    else if ((v.f_flag == ' ' || v.s_flag == ' ') && v.type != 's' && str[0] != '-')
         str = apply_flag_space(v, str);
-    else if ((v.f_flag == '#' || v.s_flag == '#') && (v.type == 'o' || v.type == 'x' || v.type == 'X'))
+    else if ((v.f_flag == '#' || v.s_flag == '#') &&\
+             (v.type == 'o' || v.type == 'x' || v.type == 'X' || v.type == 'f'))
         str = apply_flag_hash(v, str, len, n);
     else if ((v.f_flag == '0' || v.s_flag == '0') && v.type != 's')
         str = apply_flag_zero(v, str, len, n);
     if (!flag && n < 0)
+    {
+        // ft_putendl("hello");
+        // ft_putendl(str);
         str = ft_strjoin("-", str);
+    }
     return (str);
 }

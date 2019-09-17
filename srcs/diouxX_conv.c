@@ -32,10 +32,13 @@ void casting(t_properties v, long long int *n, va_list args)
 
 int     conv_diouxX(t_properties v, va_list args)
 {
+    
     t_holder var;
 
     init_structure(&var);
     casting(v, &var.n, args);
+    // debug(v);
+
     var.str = ft_llitoa_base((var.n < 0 && (v.type == 'd' || v.type == 'i')) ? var.n * -1 : var.n, v);
     var.n = (var.n < 0 && !(v.type == 'd' || v.type == 'i')) ? var.n * -1 : var.n;
     if (v.width == -1 && v.pres != -1)
@@ -51,12 +54,45 @@ int     conv_diouxX(t_properties v, va_list args)
     else if (v.width != -1 && v.pres != -1)
         var.str = apply_width_pres(v, var.str, var.n, 0);
     else
+    {
         var.str = apply_flags(v, var.str, var.n);
+    }
     var.len = ft_strlen(var.str);
     ft_putstr(var.str);
     ft_strdel(&var.str);
     return (var.len);
 }
+
+// int     conv_d(char *s, va_list args)
+// {
+//     t_var                  v;
+//     int long long          n;
+//     int                    len;
+//     char                   *str;
+//     unsigned long long int nbr;
+
+//     v = fill_structure(s, 'i');
+//     casting(v, &n, args);
+//     nbr = (n < 0) ? n * -1 : n;
+//     str = ft_llitoa_base(nbr, 10, 0);
+//     if (v.width == -1 && v.pres != -1)
+//     {
+//         str = apply_pres(v, str, n,0);
+//         str = apply_flags(v, str, s, n);
+//     }
+//     else if (v.width != -1 && v.pres == -1)
+//     {
+//         str = apply_flags(v, str, s, n);
+//         str = apply_width(v, str, n, 0);
+//     }
+//     else if (v.width != -1 && v.pres != -1)
+//         str = apply_width_pres(v, str, s, n, 0);
+//     else
+//         str = apply_flags(v, str, s, n);
+//     ft_putstr(str);
+//     len = (int)ft_strlen(str);
+//     return (len);
+// }
 
 int     conv_percent(char *str, t_properties v)
 {

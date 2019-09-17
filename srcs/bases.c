@@ -5,7 +5,7 @@
 char			*ft_llitoa_base(unsigned long long int n, t_properties v)
 {
 	char                *s;
-	int 		        len;
+	int                 len;
     int                 i;
 
 	len = (v.base == 2) ? ft_nbrlen(n, 1) : ft_nbrlen(n, 0);

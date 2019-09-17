@@ -31,6 +31,7 @@ typedef struct s_properties
    int      width;
    int      f_flag;
    int      s_flag;
+   int      t_flag;
 }              t_properties;
 
 typedef struct           s_holder
@@ -100,6 +101,7 @@ int     get_precision(char *s);
 int     get_width(char *s);
 int     get_fflag(char *s);
 int     get_sflag(char *s);
+int     get_tflag(char *s);
 /*
 **
 */
@@ -111,7 +113,7 @@ void    print(int count, char c);
 char    *ft_llitoa_base(unsigned long long int n, t_properties v);
 int     is_dot(char *s);
 void    init_structure(t_holder *var);
-t_arg    *parsing(char *s);
+t_arg *parser(char *format);
 /*
 ** FLOAT OPERATION;
 */

@@ -24,6 +24,7 @@ SRCS = $(SRCS_DIR)/ft_printf.c \
 	   $(SRCS_DIR)/diouxX_conv.c \
 	   $(SRCS_DIR)/cspb_conv.c \
 	   $(SRCS_DIR)/bases.c \
+	   $(SRCS_DIR)/parser.c \
 	   $(SRCS_DIR)/common_func.c \
 	   $(SRCS_DIR)/flags.c \
 	   $(SRCS_DIR)/float.c \

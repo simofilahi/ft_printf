@@ -28,6 +28,10 @@ void fill_structure(char *s, t_properties **v, char c)
      (*v)->width = get_width(s);
      (*v)->f_flag = get_fflag(s);
      (*v)->s_flag = get_sflag(s);
+     (*v)->t_flag = get_tflag(s);
+     (*v)->length = get_length(s);
+     (*v)->type = c;
+     (*v)->base = find_base((*v)->type);
      (*v)->f_flag = ( (*v)->width ==  (*v)->f_flag - '0') ? -1 : (*v)->f_flag;
      (*v)->s_flag = ( (*v)->width ==  (*v)->s_flag - '0') ? -1 : (*v)->s_flag;
     if (( (*v)->f_flag == '-' &&  (*v)->s_flag == '0') ||\
@@ -42,9 +46,6 @@ void fill_structure(char *s, t_properties **v, char c)
          (*v)->f_flag = '+';
          (*v)->s_flag = -1;
     }
-     (*v)->length = get_length(s);
-     (*v)->type = c;
-     (*v)->base = find_base((*v)->type);
 }
 
 int  is_found(char c)
@@ -132,6 +133,38 @@ int get_sflag(char *s)
     }
     return (-1);
 }
+
+int get_tflag(char *s)
+{
+    while (*s)
+    {
+        if ((*s == '%') && \
+            (*(s + 3) == '-' ||\
+             *(s + 3) == '0' ||\
+             *(s + 3) == '+' ||\
+             *(s + 3) == '#' ||\
+             *(s + 3) == ' '))
+                 return (*(s + 3));
+        s++;
+    }
+    return (-1);
+}
+
+// int get_fourthflag(char *s)
+// {
+//     while (*s)
+//     {
+//         if ((*s == '%') && \
+//             (*(s + 2) == '-' ||\
+//              *(s + 2) == '0' ||\
+//              *(s + 2) == '+' ||\
+//              *(s + 2) == '#' ||\
+//              *(s + 2) == ' '))
+//                  return (*(s + 2));
+//         s++;
+//     }
+//     return (-1);
+// }
 
 char    *get_length(char *s)
 {

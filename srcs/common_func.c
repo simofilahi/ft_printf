@@ -34,8 +34,10 @@ void debug(t_properties v)
     ft_putchar(v.type);
     ft_putchar('\n');
     ft_putstr("v.v_length ==> ");
-    ft_putchar('\n');
     ft_putendl(v.length);
+    ft_putstr("v.base ==> ");
+    ft_putnbr(v.base);
+    ft_putchar('\n');
 }
 
 char    *apply_width(t_properties v, char *str, int long long n, int flag)
@@ -47,7 +49,7 @@ char    *apply_width(t_properties v, char *str, int long long n, int flag)
    // str = (v.type == 's') ? ft_strsub(str, 0, 1) : str;
     len = (n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.pres == -1)) ? (int)ft_strlen(str) + 1 : (int)ft_strlen(str);
     src = NULL;
-    if ((v.f_flag == '-' || v.s_flag == '-') && v.width > len)
+    if ((v.f_flag == '-' || v.s_flag == '-' || v.t_flag == '-') && v.width > len)
     {
         src = ft_strnew(v.width - len);
         src = (char *)ft_memset(src, ' ', v.width - len);
@@ -72,7 +74,7 @@ char    *apply_pres(t_properties v, char *str, int long long n, int flag)
     (void)n;
     src = NULL;
     len = (int)ft_strlen(str);
-    if (str[0] == '0' && str[1] == '\0' && v.pres == 0)
+    if (str[0] == '0' && str[1] == '\0' && v.pres == 0 && v.type != 'f')
         str = ft_strdup("");
     else if (v.pres < len && v.type == 's')
         str = ft_strsub(str, 0, v.pres);

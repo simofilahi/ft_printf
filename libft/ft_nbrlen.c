@@ -2,11 +2,10 @@
 //
 #include <stdio.h>
 
-int ft_nbrlen(long long int n, int flag)
+int ft_nbrlen(unsigned long long int n, int flag)
 {
     int 	len;
-
-
+	
 	len = (n > 0) ? 0 : 1;
 	while (1)
 	{
