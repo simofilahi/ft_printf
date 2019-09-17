@@ -9,9 +9,9 @@ int main()
     int ret;
     // double f = 0;
     
-    ret = ft_printf("%-#1x|%-01x|%#01x|%-#01x", 0U, 0U, 0U, 0U);
+    ret = ft_printf("%.f|%-.f|%+.f|% .f|%#.f|%0.f", 42., 42., 42., 42., 42., 42.);
       printf("ret %d\n", ret);
-    ret = printf("%-#1x|%-01x|%#01x|%-#01x", 0U, 0U, 0U, 0U);
+    ret = printf("%.f|%-.f|%+.f|% .f|%#.f|%0.f", 42., 42., 42., 42., 42., 42.);
     printf("ret %d\n", ret);
     return 0;  
 }

@@ -41,7 +41,6 @@ char     *expo_calc(n_data var)
 
     tmp = NULL;
     expo = var.doublevar.expo - 16383;
-    printf("%d\n", expo);
     flag = 0;
     if (expo < 0)
     {
@@ -148,7 +147,9 @@ char    *float_calc(t_properties v, va_list args)
     }
     else if (var.doublevar.expo >= 0 && var.doublevar.mantisa > 0)
     {
+        
         bin_mant = ft_llitoa_base(var.doublevar.mantisa, v);
+        
         char *tmp;
         tmp = bin_mant;
         bin_mant = correct_mant(bin_mant);
@@ -163,7 +164,7 @@ char    *float_calc(t_properties v, va_list args)
         if (var.doublevar.sign == 1)
             final_result = ft_strjoin("-", final_result);
     }
-    return (final_result);
+    return (ft_strjoin(final_result, "00"));
 }
 
 int     conv_f(t_properties v, va_list args)
@@ -173,6 +174,8 @@ int     conv_f(t_properties v, va_list args)
     int n;
     //  debug(v);
     float_nbr = float_calc(v, args);
+    // ft_putstr("here flaot_nbr ==> ");
+    // ft_putstr(float_nbr);
     n = 0;
     if (ft_strcmp(float_nbr, "nan") == 0)
         float_nbr = apply_width(v,float_nbr, n, 0);
