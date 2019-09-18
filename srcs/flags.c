@@ -21,13 +21,23 @@ char    *apply_flag_space(t_properties v, char *str)
 char    *apply_flag_zero(t_properties v, char *str, int len, int long long n)
 {
     char *src;
+    int  flag;
 
     src = NULL;
-    if (v.width > len && v.pres == -1)
+    flag  = 0;
+    if (v.width > len && (v.pres == -1 || v.type == 'f'))
     {
+        if (v.type == 'f' && str[0] == '-')
+        {
+            str[0] = '0';
+            len += 1;
+            flag = 1;
+        }
         src = ft_strnew(v.width - len);
         ft_memset(src, '0', v.width - len);
         str = ft_strjoin(src, str);
+        if (flag == 1)
+            str = ft_strjoin("-", str);
     }
     if (v.f_flag == '+' && (v.type == 'i' || v.type == 'd') && n >= 0)
         str = ft_strjoin("+", str);
@@ -72,11 +82,38 @@ char    *apply_flag_hash(t_properties v, char *str, int len, int long long n)
     return (str);
 }
 
+
+char *apply_flags_(t_properties v, char *str, int len, int long long n, int flag)
+{
+     if (v.f_flag == '+' || v.s_flag == '+')
+        len += 1;
+    if ((v.f_flag == '+' || v.s_flag == '+') &&\
+       (v.type == 'i' || v.type == 'd' || v.type == 'f') &&\
+        n >= 0 && v.s_flag != '0' && str[0] != '-')
+        str = ft_strjoin("+", str);
+    else if (((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' ')) && (v.type != 's'))
+    {
+        str = apply_flag_zero(v, str, len + 1, n);
+        str = apply_flag_space(v, str);
+    }
+    else if ((v.f_flag == ' ' || v.s_flag == ' ') && v.type != 's' && str[0] != '-')
+        str = apply_flag_space(v, str);
+    else if ((v.f_flag == '#' || v.s_flag == '#') &&\
+             (v.type == 'o' || v.type == 'x' || v.type == 'X' || v.type == 'f'))
+        str = apply_flag_hash(v, str, len, n);
+    else if ((v.f_flag == '0' || v.s_flag == '0') && v.type != 's')
+        str = apply_flag_zero(v, str, len, n);
+    if (!flag && n < 0)
+        str = ft_strjoin("-", str);
+    return (str);
+}
+
 char    *apply_flags(t_properties v, char *str, int long long n)
 {
     int len;
     int flag = 0;
 
+    
     if (v.type == 'd')
     {
         if ((n < 0 && (v.f_flag == '0' || v.s_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
@@ -84,7 +121,6 @@ char    *apply_flags(t_properties v, char *str, int long long n)
             (n < 0 && ((v.f_flag != '0' && v.s_flag != '0') && (v.width != -1) && (v.pres != -1)))
         )
         {
-            // ft_putendl("hello");
             flag = 1;
             str = ft_strjoin("-", str);
         } 
@@ -107,29 +143,6 @@ char    *apply_flags(t_properties v, char *str, int long long n)
         }
     else
         len = (int)ft_strlen(str);
-    if (v.f_flag == '+' || v.s_flag == '+')
-        len += 1;
-    if ((v.f_flag == '+' || v.s_flag == '+') &&\
-       (v.type == 'i' || v.type == 'd' || v.type == 'f') &&\
-        n >= 0 && v.s_flag != '0' && str[0] != '-')
-        str = ft_strjoin("+", str);
-    else if (((v.f_flag == ' ' && v.s_flag == '0') || (v.f_flag == '0' && v.s_flag == ' ')) && (v.type != 's'))
-    {
-        str = apply_flag_zero(v, str, len + 1, n);
-        str = apply_flag_space(v, str);
-    }
-    else if ((v.f_flag == ' ' || v.s_flag == ' ') && v.type != 's' && str[0] != '-')
-        str = apply_flag_space(v, str);
-    else if ((v.f_flag == '#' || v.s_flag == '#') &&\
-             (v.type == 'o' || v.type == 'x' || v.type == 'X' || v.type == 'f'))
-        str = apply_flag_hash(v, str, len, n);
-    else if ((v.f_flag == '0' || v.s_flag == '0') && v.type != 's')
-        str = apply_flag_zero(v, str, len, n);
-    if (!flag && n < 0)
-    {
-        // ft_putendl("hello");
-        // ft_putendl(str);
-        str = ft_strjoin("-", str);
-    }
+    str = apply_flags_(v, str, len, n, flag);
     return (str);
 }

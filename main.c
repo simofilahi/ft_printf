@@ -7,13 +7,15 @@
 int main()
 {
     int ret;
-    // double f = 0;
+    double f = 112.42;
     
-    ret = ft_printf("%.f|%-.f|%+.f|% .f|%#.f|%0.f", 42., 42., 42., 42., 42., 42.);
-      printf("ret %d\n", ret);
-    ret = printf("%.f|%-.f|%+.f|% .f|%#.f|%0.f", 42., 42., 42., 42., 42., 42.);
+    ret = ft_printf( "%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
     printf("ret %d\n", ret);
-    return 0;  
+    ret = printf( "%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
+    printf("ret %d\n", ret);
+    // ft_printf("|%.f|%.10f|%.1f|%.6f|\n", f,f,f,f);
+    // printf("|%.f|%.100f|%.1f|%.6f|\n", f,f,f,f);
+    return 0;
 }
 
 //(  2 147 483 649  )

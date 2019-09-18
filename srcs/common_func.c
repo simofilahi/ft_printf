@@ -76,13 +76,16 @@ char    *apply_pres(t_properties v, char *str, int long long n, int flag)
     len = (int)ft_strlen(str);
     if (str[0] == '0' && str[1] == '\0' && v.pres == 0 && v.type != 'f')
         str = ft_strdup("");
-    else if (v.pres < len && v.type == 's')
+    else if (v.pres != 0 && v.pres < len && (v.type == 's' || v.type == 'f'))
         str = ft_strsub(str, 0, v.pres);
     else if (v.pres > len && v.type != 's')
     {
        src = ft_strnew(v.pres - len);
        src = (char *)ft_memset(src, '0', v.pres - len);
-       str = ft_strjoin(src, str);
+       if (v.type == 'f')
+            str = ft_strjoin(str, src);
+       else
+            str = ft_strjoin(src, str);
     }
     return (str);
 }
