@@ -77,7 +77,7 @@ char    *apply_pres(t_properties v, char *str, int long long n, int flag)
     if (str[0] == '0' && str[1] == '\0' && v.pres == 0 && v.type != 'f')
         str = ft_strdup("");
     else if (v.pres != 0 && v.pres < len && (v.type == 's' || v.type == 'f'))
-        str = ft_strsub(str, 0, v.pres);
+            str = ft_strsub(str, 0, v.pres);
     else if (v.pres > len && v.type != 's')
     {
        src = ft_strnew(v.pres - len);
@@ -87,6 +87,8 @@ char    *apply_pres(t_properties v, char *str, int long long n, int flag)
        else
             str = ft_strjoin(src, str);
     }
+     if (v.pres == 0 && v.type == 'f')
+        str = ft_strdup("");
     return (str);
 }
 

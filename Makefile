@@ -28,7 +28,7 @@ SRCS = $(SRCS_DIR)/ft_printf.c \
 	   $(SRCS_DIR)/common_func.c \
 	   $(SRCS_DIR)/flags.c \
 	   $(SRCS_DIR)/float.c \
-	   $(SRCS_DIR)/add_multi.c \
+	   $(SRCS_DIR)/float_op.c \
 	   $(SRCS_DIR)/get_propties.c
 
 OBJECTS = $(patsubst %, $(OBJS_DIR)/%, $(notdir $(SRCS:.c=.o)))

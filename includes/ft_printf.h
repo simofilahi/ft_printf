@@ -123,5 +123,6 @@ char  *multiplication(int j, t_properties v);
 int    move_point(char *arr, int index);
 char   *delete_range_before_point(char *str);
 char *multiplication(int j, t_properties v);
+char    *rounding(char *float_nbr, t_properties v);
 void    debug(t_properties v);
 #endif

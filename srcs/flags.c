@@ -132,7 +132,7 @@ char    *apply_flags(t_properties v, char *str, int long long n)
     }
     if (n < 0 && v.f_flag == '+' && v.s_flag == '0' && v.width != -1)
         len = (int)ft_strlen(str);
-   else if ((n < 0 && (v.f_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
+    else if ((n < 0 && (v.f_flag == '0') && (v.width != -1) && (v.pres != -1)) ||\
         (n < 0 && (v.f_flag == '0') && (v.width != -1) && (v.pres == -1)) ||\
         (n < 0 && (v.f_flag != '0') && (v.width != -1) && (v.pres == -1)) ||\
         (n < 0 && (v.f_flag != '0') && (v.width != -1) && (v.pres != -1)) ||\

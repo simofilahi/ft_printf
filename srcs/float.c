@@ -24,11 +24,21 @@ char *ConvertMantisatoDecimal(char *arr, t_properties v, int *index)
         i++;
     }
     tab = ft_strsplit(result, '+');
-    result = add(tab[0], tab[1]);
-    i = 2;
-    while (tab[i])
-         result = add(result, tab[i++]);
-   return (result);
+    tmp = result;
+    if (tab[1])
+    {
+        result = add(tab[0], tab[1]);
+        ft_strdel(&tmp);
+        i = 2;
+        while (tab[i])
+        {
+            tmp = result;
+            result = add(result, tab[i++]);
+            ft_strdel(&tmp);
+        }
+        return (result);
+    }
+    return (tab[0]);
 }
 
 
@@ -118,7 +128,7 @@ char    *float_calc_(n_data  var, t_properties v)
 {
     char    *bin_mant;
     char    *expo;
-    char    **arr;
+    // char    **arr;
     char    *tmp;
     char    *decimal_mant;
     char    *final_result;
@@ -139,12 +149,8 @@ char    *float_calc_(n_data  var, t_properties v)
     final_result = move_point_2(final_result, index);
     if (var.doublevar.sign == 1)
         final_result = ft_strjoin("-", final_result);
-    if (v.pres == 0)
-    {
-        arr = ft_strsplit(final_result, '.');
-        return (arr[0]);
-    }
-    return (ft_strjoin(final_result, "00"));
+    final_result = rounding(final_result, v);
+    return (final_result);
 }
 
 char    *float_calc(t_properties v, va_list args)
@@ -152,10 +158,6 @@ char    *float_calc(t_properties v, va_list args)
     n_data  var;
 
     var.nbr = va_arg(args, double);
-            // printf("here bin_mantissa %s\n", bin_mant);
-        // printf("here mantissa %ld\n", var.doublevar.mantisa);
-        // printf("here expo %ld\n", var.doublevar.expo);
-        //  printf("here d %d\n", var.doublevar.d);
     if (var.doublevar.expo == 32767 && var.doublevar.mantisa > 0)
         return (ft_strdup("nan"));
     else if (var.doublevar.expo == 32767 && var.doublevar.mantisa == 0)
@@ -180,10 +182,11 @@ char    *conv_f_(char *float_nbr, t_properties v)
     char **arr;
 
     arr = ft_strsplit(float_nbr, '.');
-    arr[0] = ft_strjoin(arr[0], ".");
+    if (v.pres > 0)
+        arr[0] = ft_strjoin(arr[0], ".");
     if (v.width == -1 && v.pres != -1)
     {
-        if (arr[1] && v.pres != 0)
+        if (arr[1])
         {
             arr[1] = apply_pres(v, arr[1], 0,0);
             // ft_putendl(arr[1]);
@@ -200,7 +203,7 @@ char    *conv_f_(char *float_nbr, t_properties v)
     }
     else if (v.width != -1 && v.pres != -1)
     {
-        if (arr[1] && v.pres != 0)
+        if (arr[1])
         {
             arr[1] = apply_pres(v, arr[1], 0,0); 
             float_nbr = ft_strjoin(arr[0], arr[1]);
@@ -215,10 +218,8 @@ char    *conv_f_(char *float_nbr, t_properties v)
     return (float_nbr);
 }
 
-// char    *rounding()
-// {
 
-// }
+
 int     conv_f(t_properties v, va_list args)
 {
     char *float_nbr;
@@ -239,7 +240,6 @@ int     conv_f(t_properties v, va_list args)
     }
     else
         float_nbr = conv_f_(float_nbr, v);
-    // float_nbr = rounding(float_nbr);
     ft_putstr(float_nbr);
     return (ft_strlen(float_nbr));
 }

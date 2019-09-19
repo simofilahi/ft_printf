@@ -43,7 +43,7 @@ char  *multi(char *n1, char *n2)
 void swap(char **n1, char **n2)
 {
     char *tmp;
-
+    
     tmp = *n1;
     *n1 = *n2;
     *n2 = tmp;
@@ -57,10 +57,10 @@ char *add(char *n1, char *n2)
     int carry;
     int index;
 
-    if (!(strlen(n1) > strlen(n2)))
+    if (!(ft_strlen(n1) > ft_strlen(n2)))
         swap(&n1, &n2);
-    len_n1 = strlen(n1) - 1;
-    len_n2 = strlen(n2) - 1; 
+    len_n1 = ft_strlen(n1) - 1;
+    len_n2 = ft_strlen(n2) - 1;
     if (!(add = ft_strnew(1000)))
         return (NULL);
     ft_bzero(add, 1000);
@@ -163,4 +163,51 @@ int    move_point(char *arr, int index)
         j++;
     }
     return (j);
+}
+
+char    *rounding(char *float_nbr, t_properties v)
+{
+    int i;
+    int j;
+    int flag;
+    int flag2;
+    int k;
+
+    i = -1;
+    flag = 0;
+    flag2 = 0;
+    j = 0;
+    while (float_nbr[++i])
+    {
+        if (float_nbr[i] == '.')
+        {
+            k = i - 1;
+            flag = 1;
+            continue;
+        }
+        if (flag)
+        {
+            if (v.pres == j)
+            {
+                flag2 = 1;
+                if (float_nbr[i] - '0' > 5)
+                    float_nbr[k] = (float_nbr[k] - '0') + 1 + '0';
+                else if (float_nbr[i] - '0' == 5)
+                {
+                    if ((float_nbr[k] - '0') % 2 == 1)
+                        float_nbr[k] = (float_nbr[k] - '0') + 1 + '0';
+                    return (float_nbr);
+                }
+                else if (float_nbr[i] - '0' < 5)
+                    break ;
+                k--;
+                if (k < 0)
+                    break ;
+            }
+            if (!flag)
+                k = i;
+            j++;
+        }
+    }
+    return (float_nbr);
 }

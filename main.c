@@ -9,9 +9,9 @@ int main()
     int ret;
     double f = 112.42;
     
-    ret = ft_printf( "%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
+    ret = ft_printf("%.f\n", 1.5);
     printf("ret %d\n", ret);
-    ret = printf( "%d|%-d|%+d|% d|%0d", INT_MIN, INT_MIN, INT_MIN, INT_MIN, INT_MIN);
+    ret = printf("%.f\n", 2.50);
     printf("ret %d\n", ret);
     // ft_printf("|%.f|%.10f|%.1f|%.6f|\n", f,f,f,f);
     // printf("|%.f|%.100f|%.1f|%.6f|\n", f,f,f,f);
